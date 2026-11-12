@@ -1,0 +1,143 @@
+{% extends 'layout.html' %}
+
+{% block title %}Data Preprocessing{% endblock %}
+
+{% block content %}
+{% if not dataset_loaded %}
+<div class="card">
+    <div class="empty-state">
+        <div class="empty-state-icon">
+            <i class="fa-solid fa-gears"></i>
+        </div>
+        <h3>No Dataset Loaded</h3>
+        <p>Please upload a dataset to view dynamic data cleaning and preprocessing stages.</p>
+        <a href="/upload" class="btn btn-primary"><i class="fa-solid fa-upload"></i> Go to Upload</a>
+    </div>
+</div>
+{% else %}
+<div class="card-grid-2">
+    <!-- Before Stats Card -->
+    <div class="card" style="border-left: 4px solid var(--accent-red);">
+        <div class="card-header">
+            <h3 class="card-title text-gradient"><i class="fa-solid fa-triangle-exclamation"></i> Raw Dataset Health (Before Preprocessing)</h3>
+        </div>
+        <div class="card-body">
+            <div class="summary-grid" style="grid-template-columns: 1fr;">
+                <div class="summary-card red">
+                    <div class="summary-details">
+                        <h3>Raw Rows</h3>
+                        <div class="summary-value">{{ stats.before.rows }}</div>
+                    </div>
+                    <div class="summary-icon"><i class="fa-solid fa-list-check"></i></div>
+                </div>
+                
+                <div class="summary-card red">
+                    <div class="summary-details">
+                        <h3>Total Missing Cells</h3>
+                        <div class="summary-value">{{ stats.before.missing }}</div>
+                    </div>
+                    <div class="summary-icon"><i class="fa-solid fa-circle-xmark"></i></div>
+                </div>
+
+                <div class="summary-card red">
+                    <div class="summary-details">
+                        <h3>Duplicate Candidates</h3>
+                        <div class="summary-value">{{ stats.before.duplicates }}</div>
+                    </div>
+                    <div class="summary-icon"><i class="fa-solid fa-clone"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- After Stats Card -->
+    <div class="card" style="border-left: 4px solid var(--accent-green);">
+        <div class="card-header">
+            <h3 class="card-title text-gradient" style="color: var(--accent-green);"><i class="fa-solid fa-circle-check"></i> Cleaned Dataset Health (After Preprocessing)</h3>
+        </div>
+        <div class="card-body">
+            <div class="summary-grid" style="grid-template-columns: 1fr;">
+                <div class="summary-card green">
+                    <div class="summary-details">
+                        <h3>Clean Rows</h3>
+                        <div class="summary-value">{{ stats.after.rows }}</div>
+                    </div>
+                    <div class="summary-icon"><i class="fa-solid fa-list-check"></i></div>
+                </div>
+                
+                <div class="summary-card green">
+                    <div class="summary-details">
+                        <h3>Remaining Missing Cells</h3>
+                        <div class="summary-value">{{ stats.after.missing }}</div>
+                    </div>
+                    <div class="summary-icon"><i class="fa-solid fa-circle-check"></i></div>
+                </div>
+
+                <div class="summary-card green">
+                    <div class="summary-details">
+                        <h3>Remaining Duplicates</h3>
+                        <div class="summary-value">{{ stats.after.duplicates }}</div>
+                    </div>
+                    <div class="summary-icon"><i class="fa-solid fa-circle-check"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Preprocessing Pipeline Details -->
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title"><i class="fa-solid fa-code-commit"></i> Decision Tree ML Preprocessing Pipeline</h3>
+    </div>
+    <div class="card-body">
+        <div class="preprocessing-flow">
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <div class="step-details">
+                    <h4>Missing Value Imputation</h4>
+                    <p>The system scans all data fields. Numeric metrics (Technical Score, Experience, etc.) are filled with their respective column median to prevent outlier distortion. Categorical fields are filled with the column's most frequent value (Mode).</p>
+                </div>
+                <div class="badge badge-success">Completed</div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <div class="step-details">
+                    <h4>Duplicate Removal</h4>
+                    <p>Scans matching record sets based on Candidate_ID and attributes. Duplicates are deleted to prevent model bias and ensure unique samples for the Decision Tree training process.</p>
+                </div>
+                <div class="badge badge-success">Completed</div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <div class="step-details">
+                    <h4>Label/Categorical Encoding</h4>
+                    <p>Categorical attributes (Education Level, Certifications, etc.) are converted into numerical codes using Scikit-learn's <code>LabelEncoder</code>. This prepares strings for mathematical processing in the decision split nodes.</p>
+                </div>
+                <div class="badge badge-success">Completed</div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">4</div>
+                <div class="step-details">
+                    <h4>Feature Selection</h4>
+                    <p>Subsets columns into input features: <code>['Education', 'Experience', 'Technical_Score', 'Communication_Score', 'Aptitude_Score', 'Certifications', 'Python', 'Java', 'SQL', 'PowerBI', 'Excel']</code> and sets the target classifier variable to <code>Selected_Role</code>.</p>
+                </div>
+                <div class="badge badge-success">Completed</div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">5</div>
+                <div class="step-details">
+                    <h4>Train-Test Data Split</h4>
+                    <p>Splits the clean database into an 80% Training set (to fit the decision paths) and a 20% Testing set (to evaluate accuracy parameters and confusion matrices dynamically).</p>
+                </div>
+                <div class="badge badge-success">Completed</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

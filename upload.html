@@ -1,0 +1,239 @@
+{% extends 'layout.html' %}
+
+{% block title %}Dataset Upload{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title"><i class="fa-solid fa-cloud-arrow-up"></i> Upload Recruitment CSV Dataset</h3>
+    </div>
+    
+    <div class="card-body">
+        <p class="text-secondary mb-4">
+            Upload your recruitment candidates dataset in CSV format. The system will automatically validate the columns, perform initial cleaning, and rebuild the Decision Tree classification model.
+        </p>
+
+        <!-- Drag & Drop Zone -->
+        <div class="upload-dropzone" id="dropzone" onclick="document.getElementById('fileInput').click()">
+            <div class="upload-icon">
+                <i class="fa-solid fa-file-csv"></i>
+            </div>
+            <h3>Drag & Drop CSV File here</h3>
+            <p class="text-secondary">or click to browse local files</p>
+            <input type="file" id="fileInput" accept=".csv" style="display: none;" onchange="handleFileSelect(event)">
+        </div>
+
+        <!-- File Progress & Info -->
+        <div id="fileInfoWrapper" style="display: none;">
+            <div class="file-info-box">
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <i class="fa-solid fa-file-circle-check text-gradient" style="font-size: 2rem;"></i>
+                    <div>
+                        <h4 id="fileName">recruitment_dataset.csv</h4>
+                        <p class="text-secondary" id="fileSize">145 KB</p>
+                    </div>
+                </div>
+                <button class="btn btn-secondary" onclick="resetUpload()">Remove</button>
+            </div>
+            
+            <div class="progress-bar-container">
+                <div class="progress-bar-fill" id="uploadProgress"></div>
+            </div>
+            
+            <div class="mt-4" style="text-align: right;">
+                <button class="btn btn-primary" id="btnAnalyze" onclick="uploadAndProcessDataset()">
+                    <i class="fa-solid fa-gears"></i> Analyze & Process Dataset
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Upload Success Analytics -->
+<div class="card" id="analyticsResultCard" style="display: none;">
+    <div class="card-header" style="border-bottom-color: var(--accent-green);">
+        <h3 class="card-title" style="color: var(--accent-green);"><i class="fa-solid fa-circle-check"></i> Upload Summary Analytics</h3>
+    </div>
+    <div class="card-body">
+        <div class="summary-grid">
+            <div class="summary-card blue">
+                <div class="summary-details">
+                    <h3>Dataset Rows</h3>
+                    <div class="summary-value" id="res-rows">0</div>
+                </div>
+                <div class="summary-icon"><i class="fa-solid fa-list-ol"></i></div>
+            </div>
+            
+            <div class="summary-card cyan">
+                <div class="summary-details">
+                    <h3>Dataset Columns</h3>
+                    <div class="summary-value" id="res-cols">0</div>
+                </div>
+                <div class="summary-icon"><i class="fa-solid fa-table-columns"></i></div>
+            </div>
+
+            <div class="summary-card red">
+                <div class="summary-details">
+                    <h3>Missing Values</h3>
+                    <div class="summary-value" id="res-missing">0</div>
+                </div>
+                <div class="summary-icon"><i class="fa-solid fa-circle-exclamation"></i></div>
+            </div>
+
+            <div class="summary-card yellow">
+                <div class="summary-details">
+                    <h3>Duplicate Records</h3>
+                    <div class="summary-value" id="res-duplicates">0</div>
+                </div>
+                <div class="summary-icon"><i class="fa-solid fa-clone"></i></div>
+            </div>
+        </div>
+
+        <h4 class="mb-2">Detected Column Fields:</h4>
+        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;" id="colBadgesContainer">
+            <!-- Badges populated dynamically -->
+        </div>
+
+        <div class="mt-4" style="display: flex; gap: 1rem;">
+            <a href="/analysis" class="btn btn-primary"><i class="fa-solid fa-magnifying-glass-chart"></i> View Detailed Analysis</a>
+            <a href="/decision-tree" class="btn btn-secondary"><i class="fa-solid fa-tree"></i> View Decision Tree Model</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    let selectedFile = null;
+
+    // Drag and drop handlers
+    const dropzone = document.getElementById('dropzone');
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+        dropzone.addEventListener(eventName, (e) => {
+            e.preventDefault();
+            dropzone.style.borderColor = 'var(--primary)';
+            dropzone.style.backgroundColor = 'rgba(99, 102, 241, 0.05)';
+        }, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+        dropzone.addEventListener(eventName, (e) => {
+            e.preventDefault();
+            dropzone.style.borderColor = 'rgba(99, 102, 241, 0.3)';
+            dropzone.style.backgroundColor = 'rgba(99, 102, 241, 0.01)';
+        }, false);
+    });
+
+    dropzone.addEventListener('drop', (e) => {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        if (files.length) {
+            processFile(files[0]);
+        }
+    });
+
+    function handleFileSelect(e) {
+        const files = e.target.files;
+        if (files.length) {
+            processFile(files[0]);
+        }
+    }
+
+    function processFile(file) {
+        if (!file.name.endsWith('.csv')) {
+            showNotification('Invalid file format. Please upload a CSV file.', 'error');
+            return;
+        }
+        selectedFile = file;
+        
+        document.getElementById('fileName').innerText = file.name;
+        document.getElementById('fileSize').innerText = (file.size / 1024).toFixed(1) + ' KB';
+        
+        document.getElementById('dropzone').style.display = 'none';
+        document.getElementById('fileInfoWrapper').style.display = 'block';
+        
+        // Progress bar simulation
+        const progress = document.getElementById('uploadProgress');
+        progress.style.width = '0%';
+        let p = 0;
+        const interval = setInterval(() => {
+            p += 15;
+            progress.style.width = p + '%';
+            if (p >= 100) {
+                clearInterval(interval);
+                showNotification('CSV file loaded into queue.', 'info');
+            }
+        }, 100);
+    }
+
+    function resetUpload() {
+        selectedFile = null;
+        document.getElementById('dropzone').style.display = 'block';
+        document.getElementById('fileInfoWrapper').style.display = 'none';
+        document.getElementById('analyticsResultCard').style.display = 'none';
+        document.getElementById('fileInput').value = '';
+    }
+
+    function uploadAndProcessDataset() {
+        if (!selectedFile) return;
+
+        const formData = new FormData();
+        formData.append('file', selectedFile);
+
+        const btn = document.getElementById('btnAnalyze');
+        btn.disabled = true;
+        btn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> Processing...`;
+
+        fetch('/api/upload', {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => {
+            if (!res.ok) {
+                return res.json().then(err => { throw new Error(err.error || 'Server error') });
+            }
+            return res.json();
+        })
+        .then(data => {
+            showNotification('Dataset uploaded and decision model trained successfully!', 'success');
+            
+            // Populate results
+            document.getElementById('res-rows').innerText = data.rows;
+            document.getElementById('res-cols').innerText = data.cols;
+            document.getElementById('res-missing').innerText = data.missing;
+            document.getElementById('res-duplicates').innerText = data.duplicates;
+            
+            const badgesContainer = document.getElementById('colBadgesContainer');
+            badgesContainer.innerHTML = '';
+            data.columns.forEach(col => {
+                const badge = document.createElement('span');
+                badge.className = 'badge badge-info';
+                badge.style.padding = '0.5rem 0.75rem';
+                badge.style.fontSize = '0.8rem';
+                badge.innerText = col;
+                badgesContainer.appendChild(badge);
+            });
+
+            document.getElementById('analyticsResultCard').style.display = 'block';
+            
+            // Update navbar badge dynamically
+            const badge = document.getElementById('datasetStatusBadge');
+            if (badge) {
+                badge.innerHTML = `
+                    <span class="status-indicator success"></span>
+                    <span class="status-text">Dataset: Loaded (${data.rows} rows)</span>
+                `;
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            showNotification(err.message, 'error');
+        })
+        .finally(() => {
+            btn.disabled = false;
+            btn.innerHTML = `<i class="fa-solid fa-gears"></i> Analyze & Process Dataset`;
+        });
+    }
+</script>
+{% endblock %}

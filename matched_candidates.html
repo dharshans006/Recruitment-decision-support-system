@@ -1,0 +1,116 @@
+{% extends 'layout.html' %}
+
+{% block title %}Matched Candidates{% endblock %}
+
+{% block content %}
+{% if not dataset_loaded %}
+<div class="card">
+    <div class="empty-state">
+        <div class="empty-state-icon">
+            <i class="fa-solid fa-user-check"></i>
+        </div>
+        <h3>No Dataset Loaded</h3>
+        <p>Before you can view matched candidates, you must upload a dataset to train the Decision Tree Classifier.</p>
+        <a href="/upload" class="btn btn-primary"><i class="fa-solid fa-upload"></i> Go to Upload</a>
+    </div>
+</div>
+{% else %}
+<div class="card">
+    <div class="card-header" style="border-bottom-color: var(--accent-green);">
+        <h3 class="card-title" style="color: var(--accent-green);"><i class="fa-solid fa-user-check"></i> Matched Candidates</h3>
+        <div class="card-actions" style="display: flex; gap: 1rem; align-items: center;">
+            <div class="search-box" style="position: relative;">
+                <input type="text" id="matchedSearch" onkeyup="filterMatchedTable()" placeholder="Search candidates..." class="form-control" style="padding-left: 2.2rem; width: 250px;">
+                <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 0.8rem; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
+            </div>
+            <span class="badge badge-success" id="matchedCount" style="padding: 0.5rem 0.85rem; font-size: 0.85rem;">{{ candidates|length }} Suitable Candidates</span>
+        </div>
+    </div>
+    
+    <div class="card-body">
+        <p class="text-secondary mb-4">
+            These are the candidates whose attributes match the profile criteria for their <strong>Applied Job Role</strong> based on the Decision Tree predictions.
+        </p>
+
+        {% if not candidates %}
+        <div class="empty-state" style="padding: 2rem;">
+            <div class="empty-state-icon" style="font-size: 2.5rem;"><i class="fa-solid fa-folder-open"></i></div>
+            <h4>No Matched Candidates Yet</h4>
+            <p>Predict candidate suitability using the Candidate Prediction tool or upload a populated dataset.</p>
+        </div>
+        {% else %}
+        <div class="table-container">
+            <table class="data-table" id="matchedTable">
+                <thead>
+                    <tr>
+                        <th>Candidate ID</th>
+                        <th>Candidate Name</th>
+                        <th>Applied Role</th>
+                        <th>Predicted Role</th>
+                        <th>Skills</th>
+                        <th>Experience</th>
+                        <th>Match Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in candidates %}
+                    <tr>
+                        <td><strong>{{ c.candidate_id }}</strong></td>
+                        <td>{{ c.name }}</td>
+                        <td>{{ c.applied_role }}</td>
+                        <td><span style="color: var(--primary); font-weight: 600;">{{ c.predicted_role }}</span></td>
+                        <td>
+                            {% if c.skills != 'None' %}
+                                {% for s in c.skills.split(', ') %}
+                                    <span class="badge badge-info" style="margin-right: 0.2rem; background-color: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.15);">{{ s }}</span>
+                                {% endfor %}
+                            {% else %}
+                                <span class="text-muted">None</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ c.experience }} Yrs</td>
+                        <td><span class="badge badge-success"><i class="fa-solid fa-check-circle" style="margin-right: 4px;"></i> {{ c.status }}</span></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function filterMatchedTable() {
+        const input = document.getElementById("matchedSearch");
+        const filter = input.value.toUpperCase();
+        const table = document.getElementById("matchedTable");
+        if (!table) return;
+        const tr = table.getElementsByTagName("tr");
+        let visibleCount = 0;
+
+        for (let i = 1; i < tr.length; i++) {
+            let match = false;
+            const tds = tr[i].getElementsByTagName("td");
+            for (let j = 0; j < tds.length; j++) {
+                if (tds[j]) {
+                    const textValue = tds[j].textContent || tds[j].innerText;
+                    if (textValue.toUpperCase().indexOf(filter) > -1) {
+                        match = true;
+                        break;
+                    }
+                }
+            }
+            if (match) {
+                tr[i].style.display = "";
+                visibleCount++;
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+        document.getElementById("matchedCount").innerText = `${visibleCount} Suitable Candidates`;
+    }
+</script>
+{% endblock %}

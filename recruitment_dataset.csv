@@ -1,0 +1,251 @@
+Candidate_ID,Candidate_Name,Education,Experience,Technical_Score,Communication_Score,Aptitude_Score,Certifications,Python,Java,SQL,PowerBI,Excel,JavaScript,Cybersecurity,Machine_Learning,Applied_Role,Selected_Role,Final_Status
+CAND-1001,Divya Venkatesan,Bachelor's,5,67,77,91,React Certified,1,1,1,0,1,0,1,1,DevOps Specialist,Cybersecurity Specialist,Rejected
+CAND-1002,Arun Gopal,Bachelor's,3,66,90,81,None,1,0,1,0,0,1,0,0,DevOps Specialist,QA Engineer,Rejected
+CAND-1003,Balaji Venkatesan,Bachelor's,2,78,61,65,Scrum Master,1,0,1,1,1,1,0,1,Business Analyst,AI / ML Engineer,Rejected
+CAND-1004,Anand Balakrishnan,Master's,4,41,43,64,Scrum Master,1,1,1,1,1,1,0,0,QA Engineer,Product Manager,Rejected
+CAND-1005,Ramesh Rajan,Master's,1,74,55,53,Scrum Master,0,1,0,1,1,0,0,0,QA Engineer,Product Manager,Rejected
+CAND-1006,Archana Murugan,Bachelor's,7,66,68,53,AWS Certified,0,0,1,0,1,0,1,0,Product Manager,Cybersecurity Specialist,Rejected
+CAND-1007,Senthil Sekar,Master's,2,71,51,76,None,1,0,0,0,1,0,0,1,Software Engineer,DevOps Specialist,Rejected
+CAND-1008,Senthil Mani,Master's,2,65,59,96,CompTIA Security+,0,0,0,0,1,0,0,0,Data Analyst,Cybersecurity Specialist,Rejected
+CAND-1009,Rajesh Chandran,Master's,3,54,79,56,Azure Certified,1,0,1,0,0,1,0,1,Data Analyst,Business Analyst,Rejected
+CAND-1010,Selvam Dinesh,Bachelor's,4,40,49,74,Azure Certified,0,0,0,0,1,1,1,0,Business Analyst,AI / ML Engineer,Rejected
+CAND-1011,Ravi Srinivasan,Master's,5,72,66,68,Scrum Master,0,0,1,0,0,1,0,0,DevOps Specialist,Product Manager,Rejected
+CAND-1012,Archana Rajan,Master's,0,59,61,85,CompTIA Security+,0,0,1,0,1,1,0,0,DevOps Specialist,Cybersecurity Specialist,Rejected
+CAND-1013,Arun Srinivasan,Master's,4,43,72,66,AWS Certified,1,0,0,1,1,0,1,1,AI / ML Engineer,Cloud Engineer,Rejected
+CAND-1014,Prakash Selvam,Master's,2,79,82,84,PMP,1,0,1,0,0,1,0,0,Software Engineer,Product Manager,Rejected
+CAND-1015,Balaji Venkatesan,Bachelor's,1,65,72,84,PMP,0,1,1,0,0,1,0,0,Data Analyst,Cybersecurity Specialist,Rejected
+CAND-1016,Swetha Ganesan,PhD,2,67,52,56,PMP,1,0,1,0,1,1,0,0,Product Manager,QA Engineer,Rejected
+CAND-1017,Ramya Gopal,Master's,6,90,66,85,TensorFlow Developer,1,1,0,0,1,0,1,0,Cybersecurity Specialist,AI / ML Engineer,Rejected
+CAND-1018,Selvam Mani,Bachelor's,4,60,73,91,None,1,1,0,0,1,1,0,0,AI / ML Engineer,Data Analyst,Rejected
+CAND-1019,Prabhu Pandian,Master's,3,93,31,82,Azure Certified,0,1,0,1,1,0,0,0,Data Analyst,AI / ML Engineer,Rejected
+CAND-1020,Aravind Venkatesan,Bachelor's,4,65,69,46,PMP,0,1,1,1,1,1,0,0,Business Analyst,QA Engineer,Rejected
+CAND-1021,Kavitha Babu,Bachelor's,3,75,88,65,None,1,0,0,1,1,1,0,0,AI / ML Engineer,DevOps Specialist,Rejected
+CAND-1022,Balaji Rajan,Master's,1,62,80,76,React Certified,0,1,0,1,0,0,1,0,Cloud Engineer,UI/UX Designer,Rejected
+CAND-1023,Suresh Mani,Master's,2,77,69,84,None,0,0,1,0,0,1,1,0,Cybersecurity Specialist,Cybersecurity Specialist,Selected
+CAND-1024,Senthil Murugan,Bachelor's,2,65,62,52,AWS Certified,0,1,1,1,0,0,0,0,Cloud Engineer,Cloud Engineer,Selected
+CAND-1025,Prakash Mani,PhD,4,73,68,68,Google Data Analytics,0,1,0,1,0,0,0,0,Business Analyst,Data Analyst,Rejected
+CAND-1026,Ramya Venkatesan,Bachelor's,0,63,63,61,AWS Certified,0,1,0,0,1,0,1,1,DevOps Specialist,Cloud Engineer,Rejected
+CAND-1027,Suresh Srinivasan,PhD,3,76,94,74,React Certified,1,0,0,0,1,1,0,0,AI / ML Engineer,DevOps Specialist,Rejected
+CAND-1028,Suresh Murugan,Bachelor's,4,68,41,71,CompTIA Security+,1,0,1,0,1,0,1,1,UI/UX Designer,Cybersecurity Specialist,Rejected
+CAND-1029,Priya Rajan,Bachelor's,4,99,65,75,Scrum Master,0,0,0,0,1,0,0,0,QA Engineer,Product Manager,Rejected
+CAND-1030,Vijay Gopal,Bachelor's,3,52,83,81,CompTIA Security+,0,0,0,1,1,0,0,0,DevOps Specialist,Cybersecurity Specialist,Rejected
+CAND-1031,Aravind Dinesh,Master's,5,56,87,53,TensorFlow Developer,1,0,0,0,0,0,0,0,AI / ML Engineer,AI / ML Engineer,Selected
+CAND-1032,Swetha Sekar,Master's,5,99,54,64,PMP,0,1,1,0,0,0,0,0,AI / ML Engineer,QA Engineer,Rejected
+CAND-1033,Ramya Ramachandran,Bachelor's,4,62,46,72,PMP,1,0,0,0,0,0,1,0,Cybersecurity Specialist,DevOps Specialist,Rejected
+CAND-1034,Rajesh Sekar,PhD,1,77,55,92,Scrum Master,0,0,0,0,1,0,0,0,Cybersecurity Specialist,Product Manager,Rejected
+CAND-1035,Deepika Gopal,Bachelor's,2,65,79,55,Google Data Analytics,0,0,1,1,0,0,0,0,Business Analyst,Data Analyst,Rejected
+CAND-1036,Ramya Krishnan,Bachelor's,4,89,45,74,Azure Certified,1,0,1,1,0,0,1,0,Cybersecurity Specialist,Cybersecurity Specialist,Selected
+CAND-1037,Karthik Rajan,Master's,4,81,50,54,CompTIA Security+,0,0,0,0,0,1,1,0,UI/UX Designer,Cybersecurity Specialist,Rejected
+CAND-1038,Swetha Anbarasan,Bachelor's,5,74,71,76,None,0,0,1,1,1,1,0,0,Cloud Engineer,Data Analyst,Rejected
+CAND-1039,Deepika Subramanian,PhD,2,73,72,62,None,1,0,0,1,0,1,0,1,UI/UX Designer,DevOps Specialist,Rejected
+CAND-1040,Sundar Raman,Bachelor's,8,77,51,80,CompTIA Security+,1,0,1,0,1,0,1,0,DevOps Specialist,Cybersecurity Specialist,Rejected
+CAND-1041,Archana Murugan,Master's,1,81,84,61,PMP,1,1,1,1,0,0,1,0,QA Engineer,Cybersecurity Specialist,Rejected
+CAND-1042,Anand Venkatesan,Master's,6,76,79,96,Google Data Analytics,0,1,1,1,0,0,0,0,Data Analyst,Data Analyst,Selected
+CAND-1043,Swetha Sekar,Bachelor's,3,58,55,61,React Certified,0,0,1,0,0,1,0,0,Cybersecurity Specialist,UI/UX Designer,Rejected
+CAND-1044,Swetha Selvam,Bachelor's,3,75,71,82,Azure Certified,0,0,0,0,0,0,0,0,Cybersecurity Specialist,Cloud Engineer,Rejected
+CAND-1045,Sundar Anbarasan,Master's,4,91,64,99,React Certified,1,1,0,1,1,0,0,0,QA Engineer,QA Engineer,Selected
+CAND-1046,Vignesh Selvam,Bachelor's,5,57,53,78,React Certified,1,0,0,1,1,0,1,0,Product Manager,Cybersecurity Specialist,Rejected
+CAND-1047,Ramya Selvam,Master's,3,80,74,71,TensorFlow Developer,1,1,1,0,1,0,0,0,QA Engineer,AI / ML Engineer,Rejected
+CAND-1048,Sandhya Gopal,Bachelor's,1,47,61,83,TensorFlow Developer,1,1,1,1,1,0,0,1,DevOps Specialist,AI / ML Engineer,Rejected
+CAND-1049,Suresh Pandian,PhD,4,51,70,77,None,0,0,0,1,1,1,0,1,Software Engineer,UI/UX Designer,Rejected
+CAND-1050,Rajesh Krishnan,Master's,1,72,68,57,Google Data Analytics,0,0,1,1,1,0,0,0,Business Analyst,Data Analyst,Rejected
+CAND-1051,Kumar Venkatesan,Master's,4,78,83,85,CompTIA Security+,0,0,0,1,0,0,1,0,Cybersecurity Specialist,Cybersecurity Specialist,Selected
+CAND-1052,Anand Dinesh,Master's,0,55,75,78,PMP,0,0,0,1,1,0,0,1,Data Analyst,Product Manager,Rejected
+CAND-1053,Harish Rajan,Bachelor's,5,99,75,86,Scrum Master,1,1,1,1,1,0,0,0,Business Analyst,Product Manager,Rejected
+CAND-1054,Sundar Srinivasan,Master's,6,79,63,81,React Certified,0,0,0,0,1,0,0,0,Cloud Engineer,Business Analyst,Rejected
+CAND-1055,Anand Pandian,PhD,2,66,61,73,TensorFlow Developer,1,0,0,0,1,0,1,1,UI/UX Designer,AI / ML Engineer,Rejected
+CAND-1056,Anand Chandran,Bachelor's,9,41,77,51,PMP,0,0,0,0,0,0,0,1,Cloud Engineer,Product Manager,Rejected
+CAND-1057,Divya Kumar,PhD,2,86,68,57,Google Data Analytics,0,0,0,0,1,0,0,1,Cloud Engineer,Data Analyst,Rejected
+CAND-1058,Ramya Selvam,Bachelor's,2,80,57,74,CompTIA Security+,0,0,1,1,1,0,0,0,Software Engineer,Cybersecurity Specialist,Rejected
+CAND-1059,Rajesh Kumar,Bachelor's,4,60,98,80,PMP,0,0,1,0,1,1,1,0,Product Manager,Product Manager,Selected
+CAND-1060,Divya Dinesh,Master's,0,72,58,83,Google Data Analytics,1,1,1,1,0,1,0,0,Cloud Engineer,Data Analyst,Rejected
+CAND-1061,Ramya Krishnan,Bachelor's,2,68,75,83,React Certified,1,0,1,0,1,1,0,0,Cloud Engineer,QA Engineer,Rejected
+CAND-1062,Suresh Anbarasan,Bachelor's,0,64,61,63,None,1,1,0,0,1,0,0,0,Product Manager,QA Engineer,Rejected
+CAND-1063,Archana Gopal,Bachelor's,8,76,50,83,Azure Certified,0,0,1,0,0,0,0,0,UI/UX Designer,Cloud Engineer,Rejected
+CAND-1064,Priya Subramanian,Bachelor's,9,85,46,65,AWS Certified,1,0,1,1,0,1,0,1,Cloud Engineer,AI / ML Engineer,Rejected
+CAND-1065,Divya Subramanian,Bachelor's,7,59,74,82,React Certified,1,0,0,0,0,0,0,0,Product Manager,UI/UX Designer,Rejected
+CAND-1066,Karthik Dinesh,Bachelor's,1,69,30,58,React Certified,0,0,1,1,0,0,0,0,Software Engineer,Software Engineer,Selected
+CAND-1067,Karthik Krishnan,Bachelor's,3,51,90,53,CompTIA Security+,1,0,0,0,1,1,0,0,DevOps Specialist,Cybersecurity Specialist,Rejected
+CAND-1068,Aravind Subramanian,Bachelor's,2,71,88,53,React Certified,0,0,0,0,1,0,1,0,AI / ML Engineer,Cybersecurity Specialist,Rejected
+CAND-1069,Prabhu Chandran,Bachelor's,6,70,54,78,React Certified,1,0,1,1,1,0,0,0,UI/UX Designer,Data Analyst,Rejected
+CAND-1070,Aravind Murugan,PhD,4,60,68,66,TensorFlow Developer,0,0,0,1,0,1,1,0,Cloud Engineer,AI / ML Engineer,Rejected
+CAND-1071,Abirami Murugan,Bachelor's,4,79,90,55,TensorFlow Developer,1,0,1,0,1,0,1,0,QA Engineer,AI / ML Engineer,Rejected
+CAND-1072,Deepika Chandran,Master's,9,40,65,79,React Certified,0,0,0,1,0,0,0,1,DevOps Specialist,UI/UX Designer,Rejected
+CAND-1073,Sandhya Ramachandran,PhD,4,60,65,65,None,1,0,1,0,1,0,0,0,QA Engineer,DevOps Specialist,Rejected
+CAND-1074,Kumar Ganesan,Master's,2,82,72,62,None,1,0,0,0,1,0,0,1,Software Engineer,AI / ML Engineer,Rejected
+CAND-1075,Vijay Selvam,Bachelor's,6,74,79,80,PMP,0,1,1,0,0,0,0,0,Cloud Engineer,Product Manager,Rejected
+CAND-1076,Divya Venkatesan,Master's,1,61,78,79,CompTIA Security+,0,1,0,1,1,1,0,0,QA Engineer,Cybersecurity Specialist,Rejected
+CAND-1077,Divya Balakrishnan,Bachelor's,3,71,85,64,React Certified,1,1,0,0,0,0,0,1,QA Engineer,Software Engineer,Rejected
+CAND-1078,Senthil Pandian,Bachelor's,5,66,64,86,None,1,1,0,1,1,0,1,0,Cloud Engineer,Cybersecurity Specialist,Rejected
+CAND-1079,Rajesh Chandran,Master's,6,82,86,72,Scrum Master,0,1,1,0,1,1,1,1,UI/UX Designer,Cybersecurity Specialist,Rejected
+CAND-1080,Sandhya Srinivasan,Bachelor's,5,65,72,70,Azure Certified,0,1,0,0,1,0,0,0,Product Manager,Cloud Engineer,Rejected
+CAND-1081,Arun Murugan,PhD,4,78,56,99,CompTIA Security+,1,1,0,0,0,1,1,1,AI / ML Engineer,AI / ML Engineer,Selected
+CAND-1082,Rajesh Raman,Bachelor's,1,51,84,82,None,1,0,1,0,1,0,0,0,DevOps Specialist,Business Analyst,Rejected
+CAND-1083,Abirami Sekar,Bachelor's,5,79,67,60,TensorFlow Developer,1,0,1,1,1,0,0,0,Data Analyst,AI / ML Engineer,Rejected
+CAND-1084,Ravi Anbarasan,Bachelor's,4,59,81,70,Azure Certified,0,0,0,0,1,1,0,0,UI/UX Designer,UI/UX Designer,Selected
+CAND-1085,Sandhya Murugan,PhD,1,65,73,64,React Certified,1,0,1,0,1,1,0,0,Business Analyst,QA Engineer,Rejected
+CAND-1086,Kavitha Anbarasan,Master's,1,73,71,65,None,1,0,0,1,1,0,0,0,Software Engineer,Cloud Engineer,Rejected
+CAND-1087,Aravind Ramachandran,Bachelor's,2,73,47,53,AWS Certified,1,0,1,0,1,1,0,0,AI / ML Engineer,Software Engineer,Rejected
+CAND-1088,Senthil Mani,Master's,2,66,72,91,AWS Certified,0,1,0,0,1,1,0,1,UI/UX Designer,AI / ML Engineer,Rejected
+CAND-1089,Kumar Babu,Master's,6,67,67,58,AWS Certified,1,0,1,1,0,0,0,0,Data Analyst,UI/UX Designer,Rejected
+CAND-1090,Vignesh Subramanian,Bachelor's,3,65,72,61,PMP,0,0,0,1,0,1,1,0,QA Engineer,Cybersecurity Specialist,Rejected
+CAND-1091,Aravind Ramachandran,Master's,5,92,66,77,CompTIA Security+,1,0,0,1,0,0,0,0,UI/UX Designer,Cybersecurity Specialist,Rejected
+CAND-1092,Prakash Anbarasan,Master's,5,63,71,72,None,1,0,0,1,0,1,0,0,DevOps Specialist,DevOps Specialist,Selected
+CAND-1093,Ramesh Balakrishnan,Master's,4,58,68,78,Google Data Analytics,1,1,1,0,0,0,1,0,Product Manager,Data Analyst,Rejected
+CAND-1094,Aravind Pandian,Bachelor's,7,84,98,62,Azure Certified,0,0,1,1,1,1,0,1,Cybersecurity Specialist,Product Manager,Rejected
+CAND-1095,Sundar Murugan,Bachelor's,6,72,98,61,React Certified,1,0,0,0,1,0,0,0,Software Engineer,DevOps Specialist,Rejected
+CAND-1096,Kavitha Pandian,Master's,1,61,38,65,Azure Certified,0,0,0,0,0,0,0,1,Cloud Engineer,Product Manager,Rejected
+CAND-1097,Sundar Babu,Bachelor's,2,72,72,96,Google Data Analytics,1,0,1,0,0,1,0,0,QA Engineer,UI/UX Designer,Rejected
+CAND-1098,Vijay Chandran,Master's,6,61,55,78,Google Data Analytics,1,0,1,1,0,0,0,0,Data Analyst,Data Analyst,Selected
+CAND-1099,Deepak Raman,Master's,0,97,84,65,None,1,0,0,1,1,0,0,0,DevOps Specialist,DevOps Specialist,Selected
+CAND-1100,Senthil Srinivasan,Bachelor's,0,90,66,88,Scrum Master,0,0,0,0,0,0,0,0,Cloud Engineer,Product Manager,Rejected
+CAND-1101,Swetha Dinesh,Master's,0,61,68,72,Google Data Analytics,0,1,1,0,0,0,0,0,DevOps Specialist,Data Analyst,Rejected
+CAND-1102,Vijay Selvam,PhD,2,79,53,70,PMP,1,0,0,0,1,1,0,0,DevOps Specialist,DevOps Specialist,Selected
+CAND-1103,Senthil Chandran,Bachelor's,4,77,77,57,TensorFlow Developer,0,0,1,0,0,1,0,0,Cybersecurity Specialist,AI / ML Engineer,Rejected
+CAND-1104,Prabhu Srinivasan,PhD,0,89,72,62,PMP,0,0,0,0,1,1,0,1,DevOps Specialist,Data Analyst,Rejected
+CAND-1105,Swetha Raman,Master's,7,71,84,72,Google Data Analytics,1,0,1,0,0,0,0,0,Software Engineer,Data Analyst,Rejected
+CAND-1106,Swetha Subramanian,Bachelor's,9,96,64,84,None,1,0,1,1,1,0,0,1,Product Manager,AI / ML Engineer,Rejected
+CAND-1107,Arun Babu,Master's,5,90,54,80,Google Data Analytics,1,1,1,0,1,0,0,0,Cybersecurity Specialist,Data Analyst,Rejected
+CAND-1108,Kavitha Babu,Master's,6,43,51,45,CompTIA Security+,0,1,1,0,0,1,1,0,Data Analyst,Cybersecurity Specialist,Rejected
+CAND-1109,Sandhya Raman,Bachelor's,3,80,89,72,Azure Certified,0,0,1,0,1,0,0,0,Data Analyst,Cloud Engineer,Rejected
+CAND-1110,Sundar Murugan,Bachelor's,8,49,44,71,AWS Certified,0,0,1,1,1,0,0,1,DevOps Specialist,Data Analyst,Rejected
+CAND-1111,Nandhini Murugan,Master's,4,69,39,70,Azure Certified,1,0,1,0,1,0,0,1,Product Manager,Cloud Engineer,Rejected
+CAND-1112,Kavitha Babu,Bachelor's,0,80,73,59,Scrum Master,0,1,0,0,1,1,1,0,Business Analyst,Cybersecurity Specialist,Rejected
+CAND-1113,Ramya Anbarasan,Bachelor's,2,54,67,84,TensorFlow Developer,1,1,0,0,0,1,0,0,Data Analyst,AI / ML Engineer,Rejected
+CAND-1114,Deepak Balakrishnan,Bachelor's,1,77,60,61,Google Data Analytics,0,1,0,0,1,1,0,0,UI/UX Designer,Data Analyst,Rejected
+CAND-1115,Karthik Dinesh,Bachelor's,3,54,60,56,TensorFlow Developer,0,0,0,0,1,1,0,0,Data Analyst,Cloud Engineer,Rejected
+CAND-1116,Kumar Babu,Bachelor's,8,70,58,74,None,1,0,0,1,0,0,0,1,Cloud Engineer,DevOps Specialist,Rejected
+CAND-1117,Sundar Mani,Master's,3,66,76,81,TensorFlow Developer,0,0,0,0,0,0,0,0,Business Analyst,AI / ML Engineer,Rejected
+CAND-1118,Ramya Mani,Master's,2,61,64,42,None,1,0,0,1,1,1,0,0,Cybersecurity Specialist,DevOps Specialist,Rejected
+CAND-1119,Abirami Srinivasan,Bachelor's,0,90,91,68,CompTIA Security+,0,0,0,0,0,1,0,0,Product Manager,Cybersecurity Specialist,Rejected
+CAND-1120,Selvam Balakrishnan,Bachelor's,5,74,99,86,None,0,1,0,0,0,1,1,1,Cloud Engineer,Cybersecurity Specialist,Rejected
+CAND-1121,Deepika Sekar,Bachelor's,3,55,45,74,None,0,0,1,0,1,1,0,0,Cybersecurity Specialist,Cloud Engineer,Rejected
+CAND-1122,Aravind Subramanian,Bachelor's,2,48,58,57,Azure Certified,0,0,0,1,1,0,0,0,AI / ML Engineer,UI/UX Designer,Rejected
+CAND-1123,Arun Selvam,Master's,8,83,67,91,None,1,0,1,0,0,1,1,1,Product Manager,AI / ML Engineer,Rejected
+CAND-1124,Sundar Rajan,Bachelor's,4,57,89,79,Google Data Analytics,1,0,0,0,0,1,0,0,QA Engineer,Data Analyst,Rejected
+CAND-1125,Manoj Chandran,Bachelor's,1,67,55,54,Google Data Analytics,1,1,1,0,1,0,1,0,AI / ML Engineer,Cybersecurity Specialist,Rejected
+CAND-1126,Harish Mani,Bachelor's,6,98,48,79,None,0,0,1,1,1,0,1,0,Software Engineer,Product Manager,Rejected
+CAND-1127,Anand Selvam,Bachelor's,2,62,59,60,AWS Certified,0,0,0,0,0,1,0,0,DevOps Specialist,Cloud Engineer,Rejected
+CAND-1128,Vijay Srinivasan,Bachelor's,4,57,71,71,TensorFlow Developer,0,1,0,0,1,0,0,0,QA Engineer,AI / ML Engineer,Rejected
+CAND-1129,Ramesh Subramanian,Bachelor's,3,56,59,81,None,1,1,1,0,0,0,1,0,Cloud Engineer,QA Engineer,Rejected
+CAND-1130,Balaji Mani,Bachelor's,5,55,69,81,React Certified,0,0,0,0,1,0,1,0,Data Analyst,UI/UX Designer,Rejected
+CAND-1131,Aravind Krishnan,Master's,0,78,58,79,AWS Certified,0,1,0,0,1,1,1,0,Cybersecurity Specialist,Cybersecurity Specialist,Selected
+CAND-1132,Anand Ramachandran,Bachelor's,2,42,45,72,PMP,1,0,1,1,1,1,0,0,AI / ML Engineer,Data Analyst,Rejected
+CAND-1133,Nandhini Murugan,Master's,4,56,76,50,None,1,0,0,0,1,1,0,0,QA Engineer,Business Analyst,Rejected
+CAND-1134,Harish Sekar,Bachelor's,3,51,58,72,React Certified,1,0,1,1,1,0,0,0,Business Analyst,Data Analyst,Rejected
+CAND-1135,Aravind Gopal,Bachelor's,1,64,82,64,CompTIA Security+,0,0,0,1,1,0,0,0,Business Analyst,Cybersecurity Specialist,Rejected
+CAND-1136,Harish Rajan,Master's,6,53,75,90,React Certified,0,0,1,0,1,1,0,0,DevOps Specialist,UI/UX Designer,Rejected
+CAND-1137,Balaji Selvam,Bachelor's,0,58,76,69,Google Data Analytics,1,0,0,0,0,0,0,1,Business Analyst,Data Analyst,Rejected
+CAND-1138,Divya Murugan,PhD,4,60,69,69,Scrum Master,0,1,0,0,1,0,0,0,Software Engineer,Product Manager,Rejected
+CAND-1139,Deepak Selvam,Bachelor's,6,73,72,66,React Certified,0,1,0,1,0,1,0,0,Product Manager,Cloud Engineer,Rejected
+CAND-1140,Sundar Chandran,Bachelor's,2,63,73,66,Scrum Master,1,0,0,0,1,1,0,0,DevOps Specialist,Product Manager,Rejected
+CAND-1141,Nandhini Ramachandran,Master's,4,99,80,67,None,1,0,1,0,1,0,1,0,Product Manager,Cybersecurity Specialist,Rejected
+CAND-1142,Balaji Krishnan,Master's,7,63,39,58,AWS Certified,1,0,1,0,1,1,0,0,Business Analyst,Cloud Engineer,Rejected
+CAND-1143,Divya Krishnan,Bachelor's,0,64,68,93,PMP,1,1,1,0,0,0,0,0,Cybersecurity Specialist,UI/UX Designer,Rejected
+CAND-1144,Swetha Rajan,Master's,4,66,79,43,Scrum Master,0,0,1,0,1,0,0,1,Cybersecurity Specialist,Product Manager,Rejected
+CAND-1145,Balaji Babu,Bachelor's,4,81,47,86,PMP,0,0,0,0,1,1,0,0,Cybersecurity Specialist,Product Manager,Rejected
+CAND-1146,Vijay Ganesan,Bachelor's,4,63,76,99,AWS Certified,0,0,1,1,1,0,0,1,Product Manager,UI/UX Designer,Rejected
+CAND-1147,Vignesh Subramanian,Master's,4,73,61,60,CompTIA Security+,1,0,1,0,1,1,0,0,Cloud Engineer,Cybersecurity Specialist,Rejected
+CAND-1148,Ramesh Venkatesan,Bachelor's,6,57,69,65,None,1,1,0,0,0,0,0,0,UI/UX Designer,Cybersecurity Specialist,Rejected
+CAND-1149,Prakash Sekar,Bachelor's,5,75,82,65,Google Data Analytics,1,0,0,1,0,0,0,0,Software Engineer,Data Analyst,Rejected
+CAND-1150,Ravi Venkatesan,Master's,3,55,61,76,TensorFlow Developer,0,0,1,0,1,1,1,0,Software Engineer,AI / ML Engineer,Rejected
+CAND-1151,Vijay Sekar,Master's,5,56,80,89,Azure Certified,0,0,0,1,0,0,0,0,Business Analyst,AI / ML Engineer,Rejected
+CAND-1152,Abirami Mani,Master's,5,98,57,55,CompTIA Security+,0,1,1,0,1,0,0,0,Business Analyst,Cybersecurity Specialist,Rejected
+CAND-1153,Archana Gopal,Bachelor's,0,92,77,71,PMP,1,0,0,0,1,0,0,1,DevOps Specialist,AI / ML Engineer,Rejected
+CAND-1154,Balaji Srinivasan,PhD,4,53,99,73,Azure Certified,1,0,1,1,0,0,0,1,AI / ML Engineer,Data Analyst,Rejected
+CAND-1155,Rajesh Rajan,Bachelor's,4,80,74,74,Azure Certified,1,0,1,1,0,0,0,0,AI / ML Engineer,Data Analyst,Rejected
+CAND-1156,Deepak Sekar,Master's,2,77,94,89,React Certified,1,0,1,1,1,0,1,0,Product Manager,Cybersecurity Specialist,Rejected
+CAND-1157,Balaji Rajan,Bachelor's,7,62,54,70,CompTIA Security+,1,0,0,1,1,0,0,0,DevOps Specialist,Cybersecurity Specialist,Rejected
+CAND-1158,Deepak Pandian,Master's,4,86,44,91,TensorFlow Developer,0,0,1,0,1,0,0,0,QA Engineer,AI / ML Engineer,Rejected
+CAND-1159,Sandhya Gopal,Bachelor's,3,63,53,50,None,0,0,0,0,1,0,1,1,Cloud Engineer,Cloud Engineer,Selected
+CAND-1160,Arun Rajan,Bachelor's,6,71,49,55,Azure Certified,1,0,0,0,0,1,0,0,Software Engineer,Cloud Engineer,Rejected
+CAND-1161,Suresh Gopal,PhD,3,95,64,52,AWS Certified,0,0,1,0,1,0,0,0,AI / ML Engineer,Cloud Engineer,Rejected
+CAND-1162,Swetha Balakrishnan,Bachelor's,3,65,30,71,CompTIA Security+,1,0,1,1,0,1,0,1,Software Engineer,UI/UX Designer,Rejected
+CAND-1163,Deepak Gopal,Bachelor's,3,80,93,86,AWS Certified,0,1,0,0,1,0,0,0,Software Engineer,Cloud Engineer,Rejected
+CAND-1164,Abirami Pandian,Bachelor's,3,53,99,72,AWS Certified,0,0,1,0,0,1,0,1,DevOps Specialist,Cloud Engineer,Rejected
+CAND-1165,Archana Ramachandran,PhD,4,69,70,70,React Certified,1,1,0,0,0,1,0,1,Data Analyst,DevOps Specialist,Rejected
+CAND-1166,Ramesh Murugan,Bachelor's,2,61,67,64,PMP,0,0,0,0,1,0,1,0,Product Manager,Product Manager,Selected
+CAND-1167,Rajesh Ramachandran,Bachelor's,2,71,64,91,CompTIA Security+,1,0,0,0,1,1,0,0,UI/UX Designer,Cybersecurity Specialist,Rejected
+CAND-1168,Manoj Srinivasan,Bachelor's,0,86,85,45,React Certified,1,0,1,1,1,0,0,1,Data Analyst,AI / ML Engineer,Rejected
+CAND-1169,Ravi Dinesh,Master's,3,64,48,61,Azure Certified,0,1,1,0,0,0,0,0,Cybersecurity Specialist,Cloud Engineer,Rejected
+CAND-1170,Deepak Mani,Bachelor's,1,96,81,88,React Certified,1,1,1,1,1,0,0,0,Product Manager,Data Analyst,Rejected
+CAND-1171,Harish Kumar,Bachelor's,5,53,60,78,React Certified,1,0,0,0,0,0,0,0,AI / ML Engineer,Cloud Engineer,Rejected
+CAND-1172,Anand Rajan,Bachelor's,0,80,64,67,Google Data Analytics,0,0,1,0,1,0,1,0,UI/UX Designer,Cybersecurity Specialist,Rejected
+CAND-1173,Deepika Pandian,Bachelor's,5,76,62,87,None,1,0,1,0,0,1,0,0,Data Analyst,QA Engineer,Rejected
+CAND-1174,Kavitha Anbarasan,Master's,1,79,76,67,Google Data Analytics,0,1,0,0,0,1,0,0,UI/UX Designer,Data Analyst,Rejected
+CAND-1175,Deepika Anbarasan,Bachelor's,4,51,80,69,Azure Certified,0,0,0,0,1,1,0,1,AI / ML Engineer,Software Engineer,Rejected
+CAND-1176,Divya Ramachandran,PhD,2,85,58,53,Azure Certified,0,0,1,1,1,0,0,0,Product Manager,Cloud Engineer,Rejected
+CAND-1177,Sundar Pandian,Master's,0,79,50,94,Google Data Analytics,1,1,1,0,0,1,0,1,Business Analyst,AI / ML Engineer,Rejected
+CAND-1178,Kavitha Rajan,Bachelor's,0,95,70,70,Azure Certified,0,0,0,1,1,0,1,0,Data Analyst,Cybersecurity Specialist,Rejected
+CAND-1179,Vignesh Sekar,Bachelor's,2,75,67,86,None,1,0,0,1,1,1,0,0,Software Engineer,DevOps Specialist,Rejected
+CAND-1180,Abirami Rajan,Bachelor's,4,72,62,71,CompTIA Security+,1,0,1,0,0,1,1,0,Cloud Engineer,Cybersecurity Specialist,Rejected
+CAND-1181,Harish Kumar,Bachelor's,4,44,49,81,TensorFlow Developer,0,0,0,0,1,1,0,0,Business Analyst,AI / ML Engineer,Rejected
+CAND-1182,Aravind Srinivasan,Master's,4,67,68,76,Azure Certified,1,0,1,0,1,0,1,0,Cloud Engineer,Cybersecurity Specialist,Rejected
+CAND-1183,Rajesh Mani,Master's,2,58,70,59,TensorFlow Developer,1,1,0,0,0,0,0,1,UI/UX Designer,AI / ML Engineer,Rejected
+CAND-1184,Selvam Selvam,Bachelor's,5,44,82,78,TensorFlow Developer,1,0,1,1,1,0,0,0,Cybersecurity Specialist,AI / ML Engineer,Rejected
+CAND-1185,Archana Kumar,Master's,4,84,91,85,TensorFlow Developer,0,1,1,0,0,1,0,1,Product Manager,AI / ML Engineer,Rejected
+CAND-1186,Prabhu Venkatesan,Master's,0,50,59,72,PMP,1,0,1,1,0,0,0,0,DevOps Specialist,Data Analyst,Rejected
+CAND-1187,Sandhya Pandian,Master's,5,59,70,62,CompTIA Security+,1,1,1,1,1,1,0,0,QA Engineer,Cybersecurity Specialist,Rejected
+CAND-1188,Vijay Krishnan,Master's,2,48,55,54,None,0,0,1,0,0,0,0,0,Cloud Engineer,Cloud Engineer,Selected
+CAND-1189,Ramya Raman,Master's,1,85,54,99,CompTIA Security+,0,0,1,0,1,0,0,1,Cybersecurity Specialist,Cybersecurity Specialist,Selected
+CAND-1190,Ramya Balakrishnan,Bachelor's,5,72,55,81,TensorFlow Developer,1,1,0,0,0,0,0,0,Data Analyst,AI / ML Engineer,Rejected
+CAND-1191,Deepak Rajan,PhD,2,71,99,70,PMP,0,0,1,0,1,0,0,0,Software Engineer,Product Manager,Rejected
+CAND-1192,Arun Venkatesan,PhD,6,59,67,95,Google Data Analytics,1,1,0,1,0,1,0,1,Business Analyst,QA Engineer,Rejected
+CAND-1193,Suresh Srinivasan,Bachelor's,2,97,77,64,Google Data Analytics,1,0,0,0,1,1,1,1,Data Analyst,AI / ML Engineer,Rejected
+CAND-1194,Prakash Babu,Master's,5,84,76,51,AWS Certified,1,0,1,0,0,0,1,1,Data Analyst,QA Engineer,Rejected
+CAND-1195,Abirami Krishnan,Bachelor's,2,66,66,80,Google Data Analytics,0,0,1,0,0,1,0,1,Cloud Engineer,Data Analyst,Rejected
+CAND-1196,Anand Kumar,Master's,4,49,73,79,Scrum Master,0,1,1,0,1,0,0,0,Data Analyst,Product Manager,Rejected
+CAND-1197,Anand Dinesh,Master's,5,86,79,77,React Certified,0,0,0,0,1,0,0,0,Business Analyst,UI/UX Designer,Rejected
+CAND-1198,Kavitha Sekar,Bachelor's,3,45,74,74,Scrum Master,1,0,1,0,1,1,0,0,AI / ML Engineer,Product Manager,Rejected
+CAND-1199,Rajesh Mani,Master's,4,50,52,85,Scrum Master,1,1,1,1,1,0,0,0,Cybersecurity Specialist,Product Manager,Rejected
+CAND-1200,Prabhu Ramachandran,Bachelor's,3,80,68,72,None,0,1,1,1,0,0,1,0,AI / ML Engineer,Cybersecurity Specialist,Rejected
+CAND-1201,Swetha Srinivasan,Bachelor's,6,62,69,65,CompTIA Security+,0,0,1,1,1,0,0,0,Cloud Engineer,Cloud Engineer,Selected
+CAND-1202,Ramya Ganesan,Bachelor's,2,65,71,65,Azure Certified,0,0,0,1,1,0,0,0,Software Engineer,Cloud Engineer,Rejected
+CAND-1203,Prabhu Chandran,Bachelor's,7,56,65,66,React Certified,0,0,1,0,1,0,0,0,Business Analyst,Business Analyst,Selected
+CAND-1204,Abirami Pandian,Master's,7,72,82,52,Scrum Master,1,0,1,0,1,0,0,1,Software Engineer,Product Manager,Rejected
+CAND-1205,Deepika Anbarasan,Bachelor's,4,83,69,85,PMP,1,0,1,1,1,0,0,1,Cybersecurity Specialist,AI / ML Engineer,Rejected
+CAND-1206,Deepak Srinivasan,Master's,2,91,99,67,React Certified,0,0,1,0,1,1,0,0,DevOps Specialist,Business Analyst,Rejected
+CAND-1207,Aravind Selvam,PhD,2,91,90,65,PMP,0,0,0,1,0,1,0,0,Software Engineer,Product Manager,Rejected
+CAND-1208,Arun Ramachandran,Master's,2,65,49,60,React Certified,1,0,1,0,1,0,0,1,DevOps Specialist,QA Engineer,Rejected
+CAND-1209,Selvam Anbarasan,Master's,1,58,67,75,Azure Certified,0,0,0,0,0,1,0,1,Cloud Engineer,UI/UX Designer,Rejected
+CAND-1210,Suresh Raman,PhD,7,55,81,69,CompTIA Security+,0,0,1,1,1,1,0,0,Cloud Engineer,Product Manager,Rejected
+CAND-1211,Sundar Raman,Bachelor's,3,80,52,76,None,1,0,1,0,0,1,0,0,AI / ML Engineer,QA Engineer,Rejected
+CAND-1212,Senthil Srinivasan,Master's,4,77,72,99,Azure Certified,1,1,1,0,1,0,0,0,Cybersecurity Specialist,Cloud Engineer,Rejected
+CAND-1213,Sundar Venkatesan,Master's,2,62,59,64,Google Data Analytics,1,1,0,1,1,0,0,0,Data Analyst,Data Analyst,Selected
+CAND-1214,Suresh Srinivasan,Bachelor's,2,87,87,64,Scrum Master,1,0,0,1,0,0,1,0,Software Engineer,Cybersecurity Specialist,Rejected
+CAND-1215,Aravind Anbarasan,Master's,1,77,60,80,CompTIA Security+,0,0,1,0,0,1,0,1,AI / ML Engineer,Cybersecurity Specialist,Rejected
+CAND-1216,Prakash Krishnan,Bachelor's,4,47,89,95,None,0,1,1,0,0,0,1,0,Cybersecurity Specialist,UI/UX Designer,Rejected
+CAND-1217,Deepak Balakrishnan,Bachelor's,2,64,72,76,TensorFlow Developer,1,0,1,1,1,0,1,0,Business Analyst,Product Manager,Rejected
+CAND-1218,Selvam Balakrishnan,Master's,5,99,65,61,PMP,0,1,0,1,0,0,1,0,DevOps Specialist,Cybersecurity Specialist,Rejected
+CAND-1219,Kavitha Ramachandran,Bachelor's,0,59,67,95,Google Data Analytics,1,0,0,0,0,1,0,0,AI / ML Engineer,Data Analyst,Rejected
+CAND-1220,Harish Selvam,Bachelor's,2,73,67,87,Google Data Analytics,0,1,1,1,1,1,0,1,Cloud Engineer,Data Analyst,Rejected
+CAND-1221,Vignesh Raman,Bachelor's,10,62,61,85,Google Data Analytics,0,0,0,0,0,0,0,0,UI/UX Designer,Data Analyst,Rejected
+CAND-1222,Balaji Krishnan,Bachelor's,5,97,76,67,Google Data Analytics,0,0,0,0,1,0,0,0,AI / ML Engineer,Data Analyst,Rejected
+CAND-1223,Prakash Pandian,Master's,5,86,79,78,CompTIA Security+,1,0,1,0,0,0,0,0,AI / ML Engineer,AI / ML Engineer,Selected
+CAND-1224,Balaji Dinesh,Bachelor's,6,87,87,80,Scrum Master,0,1,0,1,0,1,0,1,QA Engineer,Product Manager,Rejected
+CAND-1225,Suresh Rajan,Bachelor's,3,72,84,61,Scrum Master,1,0,0,1,1,0,1,0,UI/UX Designer,Cybersecurity Specialist,Rejected
+CAND-1226,Deepak Venkatesan,Master's,4,64,68,88,PMP,1,1,0,1,1,0,1,1,UI/UX Designer,DevOps Specialist,Rejected
+CAND-1227,Ravi Gopal,PhD,4,70,48,81,Scrum Master,1,0,0,0,1,0,0,0,Software Engineer,DevOps Specialist,Rejected
+CAND-1228,Harish Anbarasan,Master's,5,99,63,74,None,1,1,1,1,1,0,1,0,UI/UX Designer,AI / ML Engineer,Rejected
+CAND-1229,Kumar Rajan,Bachelor's,4,93,66,75,PMP,1,1,1,0,1,1,0,0,Data Analyst,Software Engineer,Rejected
+CAND-1230,Deepak Mani,Bachelor's,5,72,61,74,CompTIA Security+,1,0,1,0,1,1,1,0,Data Analyst,QA Engineer,Rejected
+CAND-1231,Kavitha Gopal,Bachelor's,6,54,69,62,PMP,0,0,0,0,1,0,0,0,Product Manager,Software Engineer,Rejected
+CAND-1232,Selvam Pandian,PhD,6,47,60,76,Google Data Analytics,1,0,1,0,0,0,1,0,UI/UX Designer,Data Analyst,Rejected
+CAND-1233,Swetha Subramanian,Master's,7,69,60,96,React Certified,1,0,0,1,1,0,0,0,Software Engineer,DevOps Specialist,Rejected
+CAND-1234,Anand Pandian,Bachelor's,0,37,74,65,CompTIA Security+,1,1,0,0,0,1,1,0,Business Analyst,Cybersecurity Specialist,Rejected
+CAND-1235,Abirami Balakrishnan,Master's,1,80,71,64,React Certified,1,0,0,1,1,1,0,0,Software Engineer,UI/UX Designer,Rejected
+CAND-1236,Balaji Sekar,Bachelor's,0,83,77,70,TensorFlow Developer,0,0,1,0,1,1,0,0,Data Analyst,AI / ML Engineer,Rejected
+CAND-1237,Prakash Subramanian,Bachelor's,8,53,46,63,TensorFlow Developer,0,0,0,0,1,0,0,0,Product Manager,AI / ML Engineer,Rejected
+CAND-1238,Nandhini Balakrishnan,Master's,3,73,64,76,None,0,1,0,0,0,0,0,1,DevOps Specialist,Software Engineer,Rejected
+CAND-1239,Sundar Murugan,PhD,0,91,66,86,PMP,1,0,0,0,1,1,0,0,Cloud Engineer,UI/UX Designer,Rejected
+CAND-1240,Kumar Pandian,Master's,4,76,75,77,Azure Certified,1,0,0,0,1,1,1,0,DevOps Specialist,Cybersecurity Specialist,Rejected
+CAND-1241,Divya Sekar,Master's,5,89,70,81,React Certified,0,0,0,0,0,0,1,1,Software Engineer,Cybersecurity Specialist,Rejected
+CAND-1242,Anand Krishnan,Master's,3,91,58,95,React Certified,1,0,1,1,1,0,0,0,Data Analyst,QA Engineer,Rejected
+CAND-1243,Rajesh Dinesh,Master's,3,48,69,63,React Certified,0,0,1,1,1,1,0,0,Business Analyst,Business Analyst,Selected
+CAND-1244,Selvam Sekar,Master's,6,60,61,47,CompTIA Security+,0,0,0,0,0,1,0,0,Software Engineer,Cybersecurity Specialist,Rejected
+CAND-1245,Aravind Rajan,Bachelor's,2,35,45,81,PMP,0,0,1,0,1,1,1,0,Cybersecurity Specialist,Cloud Engineer,Rejected
+CAND-1246,Kumar Subramanian,Master's,5,76,54,71,None,0,1,0,1,1,1,0,0,QA Engineer,QA Engineer,Selected
+CAND-1247,Vijay Kumar,Master's,3,52,89,83,TensorFlow Developer,1,0,0,0,1,1,1,0,Cybersecurity Specialist,AI / ML Engineer,Rejected
+CAND-1248,Karthik Subramanian,Bachelor's,3,70,70,45,PMP,1,0,0,0,1,0,1,1,QA Engineer,Cybersecurity Specialist,Rejected
+CAND-1249,Vignesh Raman,Master's,3,59,53,68,AWS Certified,0,1,0,0,1,0,0,1,UI/UX Designer,Cloud Engineer,Rejected
+CAND-1250,Deepak Anbarasan,PhD,8,79,60,79,CompTIA Security+,1,0,0,0,0,0,0,1,Software Engineer,AI / ML Engineer,Rejected

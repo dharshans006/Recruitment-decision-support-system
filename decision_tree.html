@@ -1,0 +1,287 @@
+{% extends 'layout.html' %}
+
+{% block title %}Decision Tree Analysis{% endblock %}
+
+{% block content %}
+{% if not dataset_loaded %}
+<div class="card">
+    <div class="empty-state">
+        <div class="empty-state-icon">
+            <i class="fa-solid fa-tree"></i>
+        </div>
+        <h3>No Dataset Loaded</h3>
+        <p>Please upload a dataset to train the Decision Tree Classifier and view execution metrics.</p>
+        <a href="/upload" class="btn btn-primary"><i class="fa-solid fa-upload"></i> Go to Upload</a>
+    </div>
+</div>
+{% else %}
+<!-- Metrics cards -->
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title"><i class="fa-solid fa-microchip"></i> Model Configuration & Performance</h3>
+    </div>
+    <div class="card-body">
+        <div class="form-row mb-4">
+            <div><strong>Algorithm:</strong> DecisionTreeClassifier (Scikit-learn)</div>
+            <div><strong>Target Class Variable:</strong> <code>{{ target }}</code></div>
+            <div><strong>Training Size:</strong> {{ train_size }} candidates (80%)</div>
+            <div><strong>Testing Size:</strong> {{ test_size }} candidates (20%)</div>
+        </div>
+
+        <div class="summary-grid">
+            <div class="summary-card blue">
+                <div class="summary-details">
+                    <h3>Accuracy Score</h3>
+                    <div class="summary-value">{{ metrics.accuracy }}%</div>
+                </div>
+                <div class="summary-icon"><i class="fa-solid fa-bullseye"></i></div>
+            </div>
+
+            <div class="summary-card purple">
+                <div class="summary-details">
+                    <h3>Precision Score</h3>
+                    <div class="summary-value">{{ metrics.precision }}%</div>
+                </div>
+                <div class="summary-icon"><i class="fa-solid fa-circle-check"></i></div>
+            </div>
+
+            <div class="summary-card cyan">
+                <div class="summary-details">
+                    <h3>Recall Score</h3>
+                    <div class="summary-value">{{ metrics.recall }}%</div>
+                </div>
+                <div class="summary-icon"><i class="fa-solid fa-rotate-left"></i></div>
+            </div>
+
+            <div class="summary-card green">
+                <div class="summary-details">
+                    <h3>F1 Metric Score</h3>
+                    <div class="summary-value">{{ metrics.f1 }}%</div>
+                </div>
+                <div class="summary-icon"><i class="fa-solid fa-gauge-simple-high"></i></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card-grid-2">
+    <!-- Confusion Matrix Card -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title"><i class="fa-solid fa-table-cells-large"></i> Confusion Matrix</h3>
+        </div>
+        <div class="card-body">
+            <p class="text-secondary mb-3">Comparison of actual candidate suitability classifications vs model predicted classifications.</p>
+            <div style="overflow-x: auto;">
+                <table class="data-table" style="text-align: center;">
+                    <thead>
+                        <tr>
+                            <th>Actual \ Predicted</th>
+                            {% for cls in metrics.classes %}
+                            <th style="font-size: 0.75rem;">{{ cls }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in metrics.cm %}
+                        <tr>
+                            <td style="font-weight: bold; font-size: 0.75rem;">{{ metrics.classes[loop.index0] }}</td>
+                            {% for val in row %}
+                            <td style="background-color: rgba(99, 102, 241, {{ val / 15 if val > 0 else 0 }}); font-weight: 600;">
+                                {{ val }}
+                            </td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Feature Importances Card -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title"><i class="fa-solid fa-chart-simple"></i> Feature Importance Index</h3>
+        </div>
+        <div class="card-body">
+            <p class="text-secondary mb-3">Significance rating of applicant features in driving the model's hiring decisions.</p>
+            {% for item in feature_importance %}
+            <div class="mb-3">
+                <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.25rem;">
+                    <span><strong>{{ item.feature }}</strong></span>
+                    <span>{{ item.importance }}%</span>
+                </div>
+                <div style="background-color: var(--border-color); height: 8px; border-radius: 4px; overflow: hidden;">
+                    <div style="width: {{ item.importance }}%; height: 100%; background: var(--gradient-cyan); border-radius: 4px;"></div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- Interactive SVG Decision Tree Visualizer -->
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title"><i class="fa-solid fa-diagram-next"></i> Decision Tree Structure Visualizer</h3>
+    </div>
+    <div class="card-body">
+        <p class="text-secondary mb-4">Interactive diagram representing split conditions (features, values, impurities) and outcome leaves generated by Scikit-learn.</p>
+        <div class="tree-visualizer" id="treeVisualizerWrapper">
+            <svg id="treeSvg" width="1200" height="600" class="tree-visual-svg"></svg>
+        </div>
+    </div>
+</div>
+
+<!-- Raw text representation -->
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title"><i class="fa-solid fa-file-code"></i> Model Text Rules (Inferred Nodes)</h3>
+    </div>
+    <div class="card-body">
+        <pre style="background-color: var(--bg-app); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.5rem; overflow-x: auto; font-family: monospace; font-size: 0.9rem; color: var(--text-primary);">{{ rules_text }}</pre>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+{% if dataset_loaded %}
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        fetch('/api/tree-json')
+            .then(res => res.json())
+            .then(treeData => {
+                drawTree(treeData);
+            })
+            .catch(err => {
+                console.error("Error drawing tree diagram:", err);
+                showNotification("Could not render decision tree graphics.", "error");
+            });
+    });
+
+    function drawTree(rootNode) {
+        const svg = document.getElementById('treeSvg');
+        svg.innerHTML = ''; // clear
+
+        const width = 1200;
+        const height = 550;
+        const margin = { top: 40, right: 40, bottom: 40, left: 40 };
+
+        // Simple layout tree nodes mapping
+        let nodesList = [];
+        let linksList = [];
+
+        function buildCoords(node, depth, xMin, xMax, parentX, parentY) {
+            const x = (xMin + xMax) / 2;
+            const y = margin.top + depth * 110;
+            
+            const nodeData = {
+                x: x,
+                y: y,
+                info: node
+            };
+            nodesList.push(nodeData);
+
+            if (parentX !== null) {
+                linksList.push({
+                    x1: parentX,
+                    y1: parentY,
+                    x2: x,
+                    y2: y,
+                    label: node.type === 'node' ? '' : ''
+                });
+            }
+
+            if (node.type === 'node') {
+                buildCoords(node.left, depth + 1, xMin, x, x, y);
+                buildCoords(node.right, depth + 1, x, xMax, x, y);
+            }
+        }
+
+        buildCoords(rootNode, 0, margin.left, width - margin.right, null, null);
+
+        // Render Links
+        linksList.forEach(link => {
+            const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            line.setAttribute("x1", link.x1);
+            line.setAttribute("y1", link.y1);
+            line.setAttribute("x2", link.x2);
+            line.setAttribute("y2", link.y2);
+            line.setAttribute("stroke", "#4b5563");
+            line.setAttribute("stroke-width", "2");
+            svg.appendChild(line);
+        });
+
+        // Render Nodes
+        nodesList.forEach(nd => {
+            const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
+            
+            const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+            const isLeaf = nd.info.type === 'leaf';
+            
+            const rectWidth = isLeaf ? 140 : 160;
+            const rectHeight = isLeaf ? 50 : 65;
+            
+            rect.setAttribute("x", nd.x - rectWidth / 2);
+            rect.setAttribute("y", nd.y - rectHeight / 2);
+            rect.setAttribute("rx", "6");
+            rect.setAttribute("ry", "6");
+            
+            if (isLeaf) {
+                rect.setAttribute("fill", "#10b981");
+                rect.setAttribute("stroke", "#047857");
+            } else {
+                rect.setAttribute("fill", "#1f2937");
+                rect.setAttribute("stroke", "#6366f1");
+            }
+            rect.setAttribute("stroke-width", "2");
+            group.appendChild(rect);
+
+            // Node Text Info
+            const txt = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            txt.setAttribute("x", nd.x);
+            txt.setAttribute("y", nd.y - rectHeight / 2 + 15);
+            txt.setAttribute("class", "tree-node-text");
+            txt.setAttribute("font-weight", "600");
+            
+            if (isLeaf) {
+                txt.textContent = nd.info.label;
+                txt.setAttribute("fill", "#ffffff");
+            } else {
+                txt.textContent = `${nd.info.feature} <= ${nd.info.threshold}`;
+                txt.setAttribute("fill", "#6366f1");
+            }
+            group.appendChild(txt);
+
+            // Additional details in nodes
+            if (!isLeaf) {
+                const subTxt1 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                subTxt1.setAttribute("x", nd.x);
+                subTxt1.setAttribute("y", nd.y + 10);
+                subTxt1.setAttribute("class", "tree-node-text");
+                subTxt1.textContent = `Samples: ${nd.info.samples}`;
+                group.appendChild(subTxt1);
+
+                const subTxt2 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                subTxt2.setAttribute("x", nd.x);
+                subTxt2.setAttribute("y", nd.y + 25);
+                subTxt2.setAttribute("class", "tree-node-text");
+                subTxt2.textContent = `Impurity: ${nd.info.impurity}`;
+                group.appendChild(subTxt2);
+            } else {
+                const subTxt1 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                subTxt1.setAttribute("x", nd.x);
+                subTxt1.setAttribute("y", nd.y + 12);
+                subTxt1.setAttribute("class", "tree-node-text");
+                subTxt1.textContent = `Samples: ${nd.info.samples}`;
+                group.appendChild(subTxt1);
+            }
+
+            svg.appendChild(group);
+        });
+    }
+</script>
+{% endif %}
+{% endblock %}

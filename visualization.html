@@ -1,0 +1,217 @@
+{% extends 'layout.html' %}
+
+{% block title %}Data Visualizations{% endblock %}
+
+{% block content %}
+{% if not dataset_loaded %}
+<div class="card">
+    <div class="empty-state">
+        <div class="empty-state-icon">
+            <i class="fa-solid fa-chart-bar"></i>
+        </div>
+        <h3>No Dataset Loaded</h3>
+        <p>Please upload a dataset to generate visual dashboards and interactive graphs.</p>
+        <a href="/upload" class="btn btn-primary"><i class="fa-solid fa-upload"></i> Go to Upload</a>
+    </div>
+</div>
+{% else %}
+<div class="card-grid-2">
+    <!-- Chart 1: Candidate Count by Job Role -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title"><i class="fa-solid fa-users"></i> Candidate Count by Job Role</h3>
+        </div>
+        <div class="chart-container" style="position: relative; height: 300px;">
+            <canvas id="chartCandidateCount"></canvas>
+        </div>
+    </div>
+
+    <!-- Chart 2: Selection Rate by Job Role -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title"><i class="fa-solid fa-chart-line"></i> Selection Rate by Job Role (%)</h3>
+        </div>
+        <div class="chart-container" style="position: relative; height: 300px;">
+            <canvas id="chartSelectionRate"></canvas>
+        </div>
+    </div>
+</div>
+
+<div class="card-grid-2">
+    <!-- Chart 3: Tech Score vs Communication Score (Scatter) -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title"><i class="fa-solid fa-bullseye"></i> Skill Distribution Matrix</h3>
+        </div>
+        <div class="chart-container" style="position: relative; height: 300px;">
+            <canvas id="chartSkillDistribution"></canvas>
+        </div>
+    </div>
+
+    <!-- Chart 4: Experience vs Selection Verdict -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title"><i class="fa-solid fa-briefcase"></i> Experience vs Selection</h3>
+        </div>
+        <div class="chart-container" style="position: relative; height: 300px;">
+            <canvas id="chartExpSelection"></canvas>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title"><i class="fa-solid fa-code"></i> Technical Skill Keywords Presence</h3>
+    </div>
+    <div class="chart-container" style="position: relative; height: 320px;">
+        <canvas id="chartKeywords"></canvas>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+{% if dataset_loaded %}
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        fetch('/api/chart-data')
+            .then(res => res.json())
+            .then(data => {
+                renderVisualizationCharts(data);
+            })
+            .catch(err => {
+                console.error("Error loading visualizer charts:", err);
+                showNotification("Could not load charts.", "error");
+            });
+    });
+
+    function renderVisualizationCharts(data) {
+        const isDark = document.body.classList.contains('dark-theme');
+        const textSecondaryColor = isDark ? '#94a3b8' : '#64748b';
+        const gridColor = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(226, 232, 240, 0.8)';
+        
+        Chart.defaults.color = textSecondaryColor;
+        Chart.defaults.font.family = "'Inter', sans-serif";
+
+        // Chart 1: Candidate Count by Job Role
+        new Chart(document.getElementById('chartCandidateCount').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: Object.keys(data.roles),
+                datasets: [{
+                    label: 'Total Applicants',
+                    data: Object.values(data.roles),
+                    backgroundColor: 'rgba(167, 130, 93, 0.85)',
+                    borderColor: 'rgba(167, 130, 93, 1)',
+                    borderWidth: 1,
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { grid: { display: false } },
+                    y: { grid: { color: gridColor }, ticks: { precision: 0 } }
+                }
+            }
+        });
+
+        // Chart 2: Selection Rate by Job Role
+        new Chart(document.getElementById('chartSelectionRate').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: Object.keys(data.selection_rate_by_role),
+                datasets: [{
+                    label: 'Selection Rate (%)',
+                    data: Object.values(data.selection_rate_by_role),
+                    borderColor: '#b8936c',
+                    backgroundColor: 'rgba(184, 147, 108, 0.15)',
+                    fill: true,
+                    tension: 0.4,
+                    borderWidth: 3,
+                    pointBackgroundColor: '#b8936c'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { grid: { display: false } },
+                    y: { grid: { color: gridColor }, min: 0, max: 100 }
+                }
+            }
+        });
+
+        // Chart 3: Skill Distribution (Education vs Selection)
+        new Chart(document.getElementById('chartSkillDistribution').getContext('2d'), {
+            type: 'doughnut',
+            data: {
+                labels: Object.keys(data.education),
+                datasets: [{
+                    data: Object.values(data.education),
+                    backgroundColor: ['#a7825d', '#8e6843', '#c29d78'],
+                    borderWidth: 2,
+                    borderColor: isDark ? '#2c241e' : '#ffffff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'bottom' } }
+            }
+        });
+
+        // Chart 4: Experience vs Selection Verdict
+        new Chart(document.getElementById('chartExpSelection').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: Object.keys(data.experience),
+                datasets: [{
+                    label: 'Candidates count',
+                    data: Object.values(data.experience),
+                    backgroundColor: '#8e6843',
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { grid: { display: false } },
+                    y: { grid: { color: gridColor } }
+                }
+            }
+        });
+
+        // Chart 5: Technical Skill Keywords Presence
+        new Chart(document.getElementById('chartKeywords').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: Object.keys(data.skills),
+                datasets: [{
+                    label: 'Count of Candidates with Skill',
+                    data: Object.values(data.skills),
+                    backgroundColor: [
+                        '#a7825d', '#8e6843', '#b8936c', '#d8b28a', '#c29d78'
+                    ],
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { grid: { display: false } },
+                    y: { grid: { color: gridColor } }
+                }
+            }
+        });
+    }
+</script>
+{% endif %}
+{% endblock %}

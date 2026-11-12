@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recruitment Decision Support System | Decision Tree </title>
+    <!-- Google Fonts: Inter & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="/static/css/style.css">
+    {% block head %}{% endblock %}
+</head>
+
+<body class="light-theme">
+    <script>
+        (function () {
+            const savedTheme = localStorage.getItem('theme') || 'light-theme';
+            if (savedTheme === 'dark-theme') {
+                document.body.className = 'dark-theme';
+                document.body.style.backgroundColor = '#15110d';
+            } else {
+                document.body.className = 'light-theme';
+                document.body.style.backgroundColor = '#fbf8f3';
+            }
+        })();
+    </script>
+    <!-- Global 2-second Page Loader -->
+    <div id="global-page-loader" class="global-loader-overlay">
+        <div class="global-loader-spinner"></div>
+        <div class="global-loader-text" id="global-loader-text">Loading Analytics...</div>
+    </div>
+
+    <div class="app-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="brand-logo">
+                    <i class="fa-solid fa-diagram-project"></i>
+                </div>
+                <div class="brand-info">
+                    <h2>Recruitment DSS</h2>
+                    <span class="badge-tech">Decision Tree ML</span>
+                </div>
+                <button class="mobile-toggle-close" onclick="toggleMobileSidebar()"><i
+                        class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">MAIN MODULES</div>
+                <a href="/" class="nav-item {% if request.path == '/' %}active{% endif %}">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="/upload" class="nav-item {% if request.path == '/upload' %}active{% endif %}">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <span>Dataset Upload</span>
+                </a>
+                <a href="/analysis" class="nav-item {% if request.path == '/analysis' %}active{% endif %}">
+                    <i class="fa-solid fa-magnifying-glass-chart"></i>
+                    <span>Dataset Analysis</span>
+                </a>
+                <a href="/preprocessing" class="nav-item {% if request.path == '/preprocessing' %}active{% endif %}">
+                    <i class="fa-solid fa-gears"></i>
+                    <span>Preprocessing</span>
+                </a>
+                <a href="/visualization" class="nav-item {% if request.path == '/visualization' %}active{% endif %}">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span>Visualization</span>
+                </a>
+                <a href="/decision-tree" class="nav-item {% if request.path == '/decision-tree' %}active{% endif %}">
+                    <i class="fa-solid fa-tree"></i>
+                    <span>Decision Tree</span>
+                </a>
+                <a href="/prediction" class="nav-item {% if request.path == '/prediction' %}active{% endif %}">
+                    <i class="fa-solid fa-user-gear"></i>
+                    <span>Candidate Prediction</span>
+                </a>
+                <a href="/matched-candidates"
+                    class="nav-item {% if request.path == '/matched-candidates' %}active{% endif %}">
+                    <i class="fa-solid fa-user-check"></i>
+                    <span>Matched Candidates</span>
+                </a>
+                <a href="/non-matched-candidates"
+                    class="nav-item {% if request.path == '/non-matched-candidates' %}active{% endif %}">
+                    <i class="fa-solid fa-user-xmark"></i>
+                    <span>Non-Matched Candidates</span>
+                </a>
+                <a href="/alternative-recommendations"
+                    class="nav-item {% if request.path == '/alternative-recommendations' %}active{% endif %}">
+                    <i class="fa-solid fa-lightbulb"></i>
+                    <span>Alternative Recommendations</span>
+                </a>
+                <a href="/recommendation" class="nav-item {% if request.path == '/recommendation' %}active{% endif %}">
+                    <i class="fa-solid fa-arrows-split-up-and-left"></i>
+                    <span>Role Matcher Tool</span>
+                </a>
+                <a href="/reports" class="nav-item {% if request.path == '/reports' %}active{% endif %}">
+                    <i class="fa-solid fa-file-invoice"></i>
+                    <span>Reports</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <p>&copy; 2026 Recruitment DSS</p>
+            </div>
+        </aside>
+
+        <!-- Main Content Wrapper -->
+        <div class="content-wrapper">
+            <!-- Top Navbar -->
+            <header class="navbar">
+                <div class="navbar-left">
+                    <button class="mobile-toggle-btn" onclick="toggleMobileSidebar()">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div class="navbar-title">
+                        <h1>{% block title %}Dashboard{% endblock %}</h1>
+                    </div>
+                </div>
+                <div class="navbar-right">
+                    <div class="dataset-status" id="datasetStatusBadge">
+                        <span
+                            class="status-indicator {% if dataset_loaded %}success{% else %}warning{% endif %}"></span>
+                        <span class="status-text">Dataset: {% if dataset_loaded %}Loaded ({{ record_count }} rows){%
+                            else %}Not Loaded{% endif %}</span>
+                    </div>
+                    <button class="btn-theme-toggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+                        <i class="fa-solid fa-moon theme-icon-dark"></i>
+                        <i class="fa-solid fa-sun theme-icon-light" style="display: none;"></i>
+                    </button>
+                    <div class="profile-icon" title="System Settings">
+                        <i class="fa-solid fa-circle-user"></i>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content Area -->
+            <main class="main-content">
+                <!-- Notifications Container -->
+                <div id="toast-container" class="toast-container"></div>
+
+                {% block content %}{% endblock %}
+            </main>
+        </div>
+    </div>
+
+    <!-- Global Javascript functions -->
+    <script>
+        function toggleMobileSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('mobile-open');
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            const darkIcon = document.querySelector('.theme-icon-dark');
+            const lightIcon = document.querySelector('.theme-icon-light');
+
+            if (body.classList.contains('light-theme')) {
+                body.classList.remove('light-theme');
+                body.classList.add('dark-theme');
+                darkIcon.style.display = 'none';
+                lightIcon.style.display = 'inline-block';
+                localStorage.setItem('theme', 'dark-theme');
+            } else {
+                body.classList.remove('dark-theme');
+                body.classList.add('light-theme');
+                darkIcon.style.display = 'inline-block';
+                lightIcon.style.display = 'none';
+                localStorage.setItem('theme', 'light-theme');
+            }
+        }
+
+        // Restore theme
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light-theme';
+            const body = document.body;
+            const darkIcon = document.querySelector('.theme-icon-dark');
+            const lightIcon = document.querySelector('.theme-icon-light');
+
+            if (savedTheme === 'dark-theme') {
+                body.classList.remove('light-theme');
+                body.classList.add('dark-theme');
+                if (darkIcon && lightIcon) {
+                    darkIcon.style.display = 'none';
+                    lightIcon.style.display = 'inline-block';
+                }
+            } else {
+                body.classList.remove('dark-theme');
+                body.classList.add('light-theme');
+                if (darkIcon && lightIcon) {
+                    darkIcon.style.display = 'inline-block';
+                    lightIcon.style.display = 'none';
+                }
+            }
+
+            // Intercept navigation for a smooth transition loading screen
+            const navLinks = document.querySelectorAll('.sidebar-nav .nav-item');
+            const loader = document.getElementById('global-page-loader');
+            const loaderText = document.getElementById('global-loader-text');
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    const targetUrl = link.getAttribute('href');
+
+                    // Don't intercept if it's already the current active page or has no href
+                    if (!targetUrl || link.classList.contains('active')) return;
+
+                    // Prevent immediate navigation
+                    e.preventDefault();
+
+                    // Customize text based on page name
+                    const pageSpan = link.querySelector('span');
+                    const pageName = pageSpan ? pageSpan.innerText : 'Analytics';
+                    loaderText.innerText = `Loading ${pageName}...`;
+
+                    // Show loader smoothly
+                    loader.style.display = 'flex';
+                    loader.offsetHeight; // force reflow
+                    loader.classList.add('show');
+
+                    // Wait 600ms, then navigate
+                    setTimeout(() => {
+                        window.location.href = targetUrl;
+                    }, 600);
+                });
+            });
+        });
+
+        // Toast Helper
+        function showNotification(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+
+            let iconClass = 'fa-circle-check';
+            if (type === 'error') iconClass = 'fa-circle-xmark';
+            if (type === 'warning') iconClass = 'fa-triangle-exclamation';
+            if (type === 'info') iconClass = 'fa-circle-info';
+
+            toast.innerHTML = `
+                <i class="fa-solid ${iconClass}"></i>
+                <div class="toast-content">${message}</div>
+                <button class="toast-close" onclick="this.parentElement.remove()">&times;</button>
+            `;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add('toast-fadeout');
+                setTimeout(() => toast.remove(), 400);
+            }, 4000);
+        }
+    </script>
+    {% block scripts %}{% endblock %}
+</body>
+
+</html>

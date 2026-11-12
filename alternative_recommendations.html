@@ -1,0 +1,76 @@
+{% extends 'layout.html' %}
+
+{% block title %}Alternative Role Recommendations{% endblock %}
+
+{% block content %}
+{% if not dataset_loaded %}
+<div class="card">
+    <div class="empty-state">
+        <div class="empty-state-icon">
+            <i class="fa-solid fa-lightbulb"></i>
+        </div>
+        <h3>No Dataset Loaded</h3>
+        <p>Please upload a dataset to run the alternative role match recommender engine.</p>
+        <a href="/upload" class="btn btn-primary"><i class="fa-solid fa-upload"></i> Go to Upload</a>
+    </div>
+</div>
+{% else %}
+<div class="card">
+    <div class="card-header" style="border-bottom-color: var(--accent-purple);">
+        <h3 class="card-title" style="color: var(--accent-purple);"><i class="fa-solid fa-lightbulb"></i> Alternative Role Recommendations</h3>
+        <span class="badge badge-warning" style="padding: 0.5rem 0.85rem; font-size: 0.85rem; background-color: rgba(139, 92, 246, 0.1); color: var(--accent-purple);">{{ recommendations|length }} Candidates Analyzed</span>
+    </div>
+    <div class="card-body">
+        <p class="text-secondary mb-4">
+            Below are the top alternative job role matches calculated dynamically using the Decision Tree model's probability metrics. Matches are ranked from highest to lowest probability, excluding the candidate's original applied role.
+        </p>
+
+        {% if not recommendations %}
+        <div class="empty-state" style="padding: 4rem 2rem;">
+            <div class="empty-state-icon" style="font-size: 3rem; color: var(--text-muted);"><i class="fa-solid fa-arrows-left-right-to-line"></i></div>
+            <h4>No Recommendations Generated Yet</h4>
+            <p>Go to the <strong>Non-Matched Candidates</strong> page and click <strong>Analyze Alternative Roles</strong> for any candidate to generate custom matching profiles.</p>
+            <a href="/non-matched-candidates" class="btn btn-secondary" style="border-color: var(--accent-purple); color: var(--accent-purple);"><i class="fa-solid fa-user-xmark"></i> Go to Non-Matched Candidates</a>
+        </div>
+        {% else %}
+        <div class="card-grid-2">
+            {% for r in recommendations %}
+            <div class="card" style="border-left: 4px solid var(--accent-purple); margin-bottom: 0;">
+                <div style="border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem; margin-bottom: 1rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--primary);">{{ r.name }}</h3>
+                        <span class="badge badge-info" style="font-size: 0.75rem;">{{ r.candidate_id }}</span>
+                    </div>
+                    <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.25rem;">
+                        Original Applied Job: <strong style="color: var(--text-primary);">{{ r.applied_role }}</strong> | 
+                        Primary Prediction: <strong style="color: var(--accent-purple);">{{ r.predicted_role }}</strong>
+                    </p>
+                </div>
+                
+                <h4 style="font-size: 0.9rem; margin-bottom: 1rem; color: var(--text-secondary);"><i class="fa-solid fa-list-ol"></i> Top Alternate Mappings:</h4>
+                <div class="alt-roles-list">
+                    {% for alt in r.top_alternatives %}
+                    <div class="alt-role-item" style="padding: 0.75rem 1rem; margin-bottom: 0.5rem; background-color: var(--bg-app); border: 1px solid var(--border-color); border-radius: var(--radius-sm); display: block;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; font-weight: 600;">
+                            <span style="font-size: 0.9rem;">{{ alt.role }}</span>
+                            <span class="alt-role-match" style="background-color: rgba(139, 92, 246, 0.1); color: var(--accent-purple); font-size: 0.8rem; padding: 0.15rem 0.5rem;">{{ alt.match_pct }}% Match</span>
+                        </div>
+                        <div class="progress-bar-thin" style="height: 4px; background-color: var(--border-color); border-radius: 2px; overflow: hidden; margin-top: 0.4rem;">
+                            <div class="progress-fill-purple" style="height: 100%; background: var(--gradient-purple); width: {{ alt.match_pct }}%"></div>
+                        </div>
+                        {% if alt.reasons %}
+                        <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.4rem; line-height: 1.3;">
+                            <strong>Fit Rationale:</strong> {{ alt.reasons|join(', ') }}
+                        </p>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+{% endblock %}

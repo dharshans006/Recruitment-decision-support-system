@@ -1,0 +1,366 @@
+{% extends 'layout.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="dashboard-header-block mb-4" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+    <h2 class="dashboard-main-title text-gradient" style="margin-bottom: 0;">Recruitment Decision Support System</h2>
+    {% if dataset_loaded %}
+    <button class="btn" onclick="resetDataset()" style="background-color: var(--accent-red); color: white; display: flex; align-items: center; gap: 0.5rem; border: none; padding: 0.6rem 1.2rem; border-radius: var(--radius-md); font-weight: 500; cursor: pointer; transition: background-color 0.2s;">
+        <i class="fa-solid fa-trash-can"></i> Remove Dataset
+    </button>
+    {% endif %}
+</div>
+
+{% if not dataset_loaded %}
+<!-- Empty State when no dataset is uploaded -->
+<div class="card">
+    <div class="empty-state">
+        <div class="empty-state-icon">
+            <i class="fa-solid fa-chart-pie"></i>
+        </div>
+        <h3>No Dataset Loaded</h3>
+        <p>Before you can view candidate analysis, you must upload a recruitment dataset CSV. </p>
+        <div style="display: flex; gap: 1rem; justify-content: center;">
+            <a href="/upload" class="btn btn-primary">
+                <i class="fa-solid fa-upload"></i> Upload Candidates Data
+            </a>
+        </div>
+    </div>
+</div>
+{% else %}
+<!-- Summary statistics grid -->
+<div class="summary-grid">
+    <div class="summary-card blue">
+        <div class="summary-details">
+            <h3>Total Candidates</h3>
+            <div class="summary-value" id="stat-total">{{ stats.total }}</div>
+        </div>
+        <div class="summary-icon">
+            <i class="fa-solid fa-users"></i>
+        </div>
+    </div>
+
+    <div class="summary-card green">
+        <div class="summary-details">
+            <h3>Selected</h3>
+            <div class="summary-value" id="stat-selected">{{ stats.selected }}</div>
+        </div>
+        <div class="summary-icon">
+            <i class="fa-solid fa-circle-check"></i>
+        </div>
+    </div>
+
+    <div class="summary-card red">
+        <div class="summary-details">
+            <h3>Rejected</h3>
+            <div class="summary-value" id="stat-rejected">{{ stats.rejected }}</div>
+        </div>
+        <div class="summary-icon">
+            <i class="fa-solid fa-circle-xmark"></i>
+        </div>
+    </div>
+
+    <div class="summary-card purple">
+        <div class="summary-details">
+            <h3>Selection Rate</h3>
+            <div class="summary-value" id="stat-rate">{{ stats.rate }}%</div>
+        </div>
+        <div class="summary-icon">
+            <i class="fa-solid fa-percent"></i>
+        </div>
+    </div>
+
+    <div class="summary-card cyan">
+        <div class="summary-details">
+            <h3>Avg Tech Score</h3>
+            <div class="summary-value" id="stat-avg-tech">{{ stats.avg_tech }}</div>
+        </div>
+        <div class="summary-icon">
+            <i class="fa-solid fa-laptop-code"></i>
+        </div>
+    </div>
+
+    <div class="summary-card yellow">
+        <div class="summary-details">
+            <h3>Avg Experience</h3>
+            <div class="summary-value" id="stat-avg-exp">{{ stats.avg_exp }} yrs</div>
+        </div>
+        <div class="summary-icon">
+            <i class="fa-solid fa-briefcase"></i>
+        </div>
+    </div>
+</div>
+
+<!-- Charts Grid -->
+<div class="card-grid-2">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title"><i class="fa-solid fa-user-tie"></i> Candidates by Applied Job Role</h3>
+        </div>
+        <div class="chart-container" style="position: relative; height: 300px;">
+            <canvas id="chartRoles"></canvas>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title"><i class="fa-solid fa-circle-half-stroke"></i> Selection Verdict</h3>
+        </div>
+        <div class="chart-container" style="position: relative; height: 300px;">
+            <canvas id="chartStatus"></canvas>
+        </div>
+    </div>
+</div>
+
+<div class="card-grid-3">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title"><i class="fa-solid fa-graduation-cap"></i> Education level</h3>
+        </div>
+        <div class="chart-container" style="position: relative; height: 220px;">
+            <canvas id="chartEducation"></canvas>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title"><i class="fa-solid fa-sliders"></i> Experience Distribution</h3>
+        </div>
+        <div class="chart-container" style="position: relative; height: 220px;">
+            <canvas id="chartExperience"></canvas>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title"><i class="fa-solid fa-gauge-high"></i> Tech Scores</h3>
+        </div>
+        <div class="chart-container" style="position: relative; height: 220px;">
+            <canvas id="chartTech"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- Recent analysis logs -->
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title"><i class="fa-solid fa-clock-rotate-left"></i> Analysis Status Log</h3>
+    </div>
+    <div class="table-container">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Log Details</th>
+                    <th>Metric Value</th>
+                    <th>Status Badge</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Dataset Records Read</td>
+                    <td>{{ stats.total }} records loaded successfully</td>
+                    <td><span class="badge badge-success">Loaded</span></td>
+                </tr>
+                <tr>
+                    <td>Model Algorithm Activated</td>
+                    <td>DecisionTreeClassifier (max_depth=4)</td>
+                    <td><span class="badge badge-info">Active</span></td>
+                </tr>
+                <tr>
+                    <td>Target Variable Monitored</td>
+                    <td>Selected_Role (multi-class suitable match prediction)</td>
+                    <td><span class="badge badge-info">Target</span></td>
+                </tr>
+                <tr>
+                    <td>Recent Analysis Timestamp</td>
+                    <td>2026-08-14 (Real-time computed)</td>
+                    <td><span class="badge badge-success">Sync Completed</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
+
+{% block scripts %}
+{% if dataset_loaded %}
+<script>
+    function resetDataset() {
+        if (!confirm("Are you sure you want to remove the current dataset and clear all analysis?")) return;
+        
+        // Show loading toast or overlay
+        showNotification("Clearing dataset and models...", "warning");
+        
+        fetch('/api/reset', { method: 'POST' })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    showNotification("Dataset and analysis successfully reset.", "success");
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 500);
+                } else {
+                    showNotification(data.error || "Failed to reset dataset.", "error");
+                }
+            })
+            .catch(err => {
+                console.error("Error resetting dataset:", err);
+                showNotification("Network error occurred during reset.", "error");
+            });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        fetch('/api/chart-data')
+            .then(res => res.json())
+            .then(data => {
+                renderCharts(data);
+            })
+            .catch(err => {
+                console.error("Error loading chart data:", err);
+                showNotification("Failed to load chart analytics.", "error");
+            });
+    });
+
+    function renderCharts(data) {
+        // Theme adjustments
+        const isDark = document.body.classList.contains('dark-theme');
+        const textPrimaryColor = isDark ? '#f1f5f9' : '#1e293b';
+        const textSecondaryColor = isDark ? '#94a3b8' : '#64748b';
+        const gridColor = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(226, 232, 240, 0.8)';
+
+        Chart.defaults.color = textSecondaryColor;
+        Chart.defaults.font.family = "'Inter', sans-serif";
+
+        // 1. Roles Bar Chart
+        const rolesCtx = document.getElementById('chartRoles').getContext('2d');
+        new Chart(rolesCtx, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(data.roles),
+                datasets: [{
+                    label: 'Candidates',
+                    data: Object.values(data.roles),
+                    backgroundColor: [
+                        '#a7825d', '#8e6843', '#b8936c', '#d8b28a',
+                        '#c29d78', '#6e8b7e', '#b85c5c', '#8ca398'
+                    ],
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    x: { grid: { display: false } },
+                    y: { grid: { color: gridColor }, ticks: { precision: 0 } }
+                }
+            }
+        });
+
+        // 2. Verdict Doughnut
+        const statusCtx = document.getElementById('chartStatus').getContext('2d');
+        new Chart(statusCtx, {
+            type: 'doughnut',
+            data: {
+                labels: Object.keys(data.status),
+                datasets: [{
+                    data: Object.values(data.status),
+                    backgroundColor: ['#b8936c', '#b85c5c'],
+                    borderWidth: 2,
+                    borderColor: isDark ? '#2c241e' : '#ffffff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' }
+                },
+                cutout: '60%'
+            }
+        });
+
+        // 3. Education Pie Chart
+        const eduCtx = document.getElementById('chartEducation').getContext('2d');
+        new Chart(eduCtx, {
+            type: 'pie',
+            data: {
+                labels: Object.keys(data.education),
+                datasets: [{
+                    data: Object.values(data.education),
+                    backgroundColor: ['#a7825d', '#8e6843', '#c29d78']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' }
+                }
+            }
+        });
+
+        // 4. Experience Polar Area
+        const expCtx = document.getElementById('chartExperience').getContext('2d');
+        new Chart(expCtx, {
+            type: 'polarArea',
+            data: {
+                labels: Object.keys(data.experience),
+                datasets: [{
+                    data: Object.values(data.experience),
+                    backgroundColor: [
+                        'rgba(167, 130, 93, 0.7)',
+                        'rgba(142, 104, 67, 0.7)',
+                        'rgba(194, 157, 120, 0.7)',
+                        'rgba(110, 139, 126, 0.7)'
+                    ],
+                    borderWidth: 1,
+                    borderColor: gridColor
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    r: { grid: { color: gridColor }, ticks: { display: false } }
+                }
+            }
+        });
+
+        // 5. Tech Score Bar
+        const techCtx = document.getElementById('chartTech').getContext('2d');
+        new Chart(techCtx, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(data.tech_score),
+                datasets: [{
+                    data: Object.values(data.tech_score),
+                    backgroundColor: '#a7825d',
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    x: { grid: { display: false } },
+                    y: { grid: { color: gridColor } }
+                }
+            }
+        });
+    }
+</script>
+{% endif %}
+{% endblock %}

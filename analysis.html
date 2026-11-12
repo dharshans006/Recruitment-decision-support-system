@@ -1,0 +1,230 @@
+{% extends 'layout.html' %}
+
+{% block title %}Dataset Analysis{% endblock %}
+
+{% block content %}
+{% if not dataset_loaded %}
+<div class="card">
+    <div class="empty-state">
+        <div class="empty-state-icon">
+            <i class="fa-solid fa-magnifying-glass-chart"></i>
+        </div>
+        <h3>No Dataset Loaded</h3>
+        <p>You need to upload a recruitment dataset to view analysis and statistics.</p>
+        <a href="/upload" class="btn btn-primary"><i class="fa-solid fa-upload"></i> Go to Upload</a>
+    </div>
+</div>
+{% else %}
+<!-- Summary stats boxes -->
+<div class="card-grid-2">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title"><i class="fa-solid fa-database"></i> Dataset Dimension & Health</h3>
+        </div>
+        <div class="card-body">
+            <table class="data-table">
+                <tbody>
+                    <tr>
+                        <td><strong>Total Records (Rows)</strong></td>
+                        <td>{{ dimensions.rows }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Total Fields (Columns)</strong></td>
+                        <td>{{ dimensions.cols }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Duplicate Records</strong></td>
+                        <td>
+                            {% if duplicates > 0 %}
+                            <span class="badge badge-warning">{{ duplicates }} rows</span>
+                            {% else %}
+                            <span class="badge badge-success">0 (Healthy)</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title"><i class="fa-solid fa-circle-exclamation"></i> Missing Values Summary</h3>
+        </div>
+        <div class="card-body" style="max-height: 180px; overflow-y: auto;">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Column Field</th>
+                        <th>Missing Count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for col, val in missing.items() %}
+                    <tr>
+                        <td>{{ col }}</td>
+                        <td>
+                            {% if val > 0 %}
+                            <span class="badge badge-danger">{{ val }} missing</span>
+                            {% else %}
+                            <span class="badge badge-success">0</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Basic statistics for numeric columns -->
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title"><i class="fa-solid fa-calculator"></i> Numerical Descriptive Statistics</h3>
+    </div>
+    <div class="table-container">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Column Name</th>
+                    <th>Mean</th>
+                    <th>Median</th>
+                    <th>Minimum</th>
+                    <th>Maximum</th>
+                    <th>Std Deviation</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for col, desc in stats.items() %}
+                <tr>
+                    <td><strong>{{ col }}</strong></td>
+                    <td>{{ desc.mean }}</td>
+                    <td>{{ desc.median }}</td>
+                    <td>{{ desc.min }}</td>
+                    <td>{{ desc.max }}</td>
+                    <td>{{ desc.std }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Detailed searchable data preview -->
+<div class="card">
+    <div class="card-header" style="flex-wrap: wrap; gap: 1rem;">
+        <h3 class="card-title"><i class="fa-solid fa-table"></i> Interactive Candidate Data Table</h3>
+        
+        <!-- Search bar -->
+        <div style="display: flex; gap: 0.5rem; align-items: center; max-width: 320px; width: 100%;">
+            <i class="fa-solid fa-magnifying-glass text-secondary"></i>
+            <input type="text" id="tableSearchInput" onkeyup="filterPreviewTable()" class="form-control" placeholder="Search candidates or roles...">
+        </div>
+    </div>
+    
+    <div class="table-container" style="max-height: 450px; overflow-y: auto;">
+        <table class="data-table" id="previewTable">
+            <thead>
+                <tr id="tableHeadersRow">
+                    <!-- Loaded dynamically -->
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <!-- Loaded dynamically -->
+            </tbody>
+        </table>
+    </div>
+    <div style="text-align: right; margin-top: 1rem;">
+        <span class="text-secondary" id="tableRowCount">Showing 0 rows</span>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+{% if dataset_loaded %}
+<script>
+    let rawRecords = [];
+    let columns = [];
+
+    document.addEventListener("DOMContentLoaded", () => {
+        // Fetch raw data
+        fetch('/api/dataset-info')
+            .then(res => res.json())
+            .then(resData => {
+                if (resData.loaded) {
+                    rawRecords = resData.data.preview_data;
+                    // Extract column headers
+                    if (rawRecords.length > 0) {
+                        columns = Object.keys(rawRecords[0]);
+                        renderHeaders();
+                        renderRows(rawRecords);
+                    }
+                }
+            })
+            .catch(err => {
+                console.error("Error fetching preview details:", err);
+                showNotification("Could not load table preview.", "error");
+            });
+    });
+
+    function renderHeaders() {
+        const row = document.getElementById('tableHeadersRow');
+        row.innerHTML = '';
+        columns.forEach(col => {
+            const th = document.createElement('th');
+            th.innerText = col;
+            row.appendChild(th);
+        });
+    }
+
+    function renderRows(records) {
+        const tbody = document.getElementById('tableBody');
+        tbody.innerHTML = '';
+        
+        records.forEach(row => {
+            const tr = document.createElement('tr');
+            columns.forEach(col => {
+                const td = document.createElement('td');
+                let val = row[col];
+                
+                // Styling specific statuses/verdicts
+                if (col === 'Final_Status' || col === 'Status') {
+                    if (val === 'Selected') {
+                        td.innerHTML = `<span class="badge badge-success">${val}</span>`;
+                    } else {
+                        td.innerHTML = `<span class="badge badge-danger">${val}</span>`;
+                    }
+                } else if (col === 'Candidate_ID') {
+                    td.innerHTML = `<strong>${val}</strong>`;
+                } else {
+                    td.innerText = val;
+                }
+                tr.appendChild(td);
+            });
+            tbody.appendChild(tr);
+        });
+        
+        document.getElementById('tableRowCount').innerText = `Showing ${records.length} of ${rawRecords.length} records`;
+    }
+
+    function filterPreviewTable() {
+        const query = document.getElementById('tableSearchInput').value.toLowerCase();
+        
+        if (!query) {
+            renderRows(rawRecords);
+            return;
+        }
+
+        const filtered = rawRecords.filter(row => {
+            return columns.some(col => {
+                return String(row[col]).toLowerCase().includes(query);
+            });
+        });
+
+        renderRows(filtered);
+    }
+</script>
+{% endif %}
+{% endblock %}
